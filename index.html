@@ -3,74 +3,121 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>WebDev Vanilla | Sites Ultrarrápidos e Topo do Google</title>
-    <meta name="description" content="Desenvolvimento web de elite com código puro, foco total em SEO, Core Web Vitals e integração com Google.">
+    <title>Claudio Schmidt Dev | Performance Web de Elite</title>
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;900&display=swap" rel="stylesheet">
     
-    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
 
-    <header class="main-header">
-        <nav class="container">
-            <div class="logo" aria-label="WebDev Vanilla Home">CLAUDIOSCHMIDT<span>.Dev</span></div>
-            <ul class="nav-links">
-                <li><a href="#inicio" class="active">Início</a></li>
-                <li><a href="#servicos">Serviços</a></li>
-                <li><a href="#portfolio">Portfólio</a></li>
-                <li><a href="#contato">Contato</a></li>
-            </ul>
-        </nav>
-    </header>
+    <header class="cabecalho-fixo">
+    <nav class="container navegacao">
+        <a href="#" class="logo-marca">
+            <span class="simbolo-code">&lt;/&gt;</span> CLAUDIOSCHMIDT<span>.dev</span>
+        </a>
+        
+        <button class="menu-hamburguer" aria-label="Abrir Menu">
+            <span class="barrinha"></span>
+            <span class="barrinha"></span>
+            <span class="barrinha"></span>
+        </button>
+
+        <ul class="lista-menu">
+            <li><a href="#servicos">Serviços</a></li>
+            <li><a href="#performance">Performance</a></li>
+            <li><a href="#sobre">Sobre</a></li>
+            <li>
+                <a href="https://wa.me/5547992385131" target="_blank" class="botao-neon pequeno">
+                    CONTATO
+                </a>
+            </li>
+        </ul>
+    </nav>
+</header>
 
     <main>
-        <section id="inicio" class="hero container">
-            <div class="hero-content">
-                <h1>SITES ULTRARRÁPIDOS.<br>CÓDIGO PURO.<br><span class="highlight">TOPO DO GOOGLE.</span></h1>
-                <p>Desenvolvimento web de elite, focado em performance absoluta e integração total com o ecossistema Google para máxima visibilidade.</p>
-                <a href="#contato" class="btn-cta">Quero meu site rápido</a>
+        <section id="inicio" class="secao-destaque container revelar">
+            <div class="texto-principal">
+                <h1>SITES<br> 
+                    <span class="cor-branca">ULTRARRÁPIDOS.</span><br> 
+                    CÓDIGO PURO.<br> 
+                    <span class="cor-neon">TOPO DO GOOGLE.</span>
+                </h1>
+                <p>Engenharia de software focada em velocidade bruta e SEO técnico. Entregas com PageSpeed 100 para negócios que não podem esperar.</p>
+                <a href="https://wa.me/5547992385131" target="_blank" class="botao-neon">
+                    QUERO MEU SITE RÁPIDO
+                </a>
             </div>
-            <div class="hero-visual">
-                <div class="stats-card">
-                    <span class="score">100</span>
-                    <p>PageSpeed Insights</p>
+
+            <div class="container-visual">
+                <div class="elemento-3d">
+                    <div class="circulo-decorativo"></div>
+                    <div class="placa-performance">
+                        <span class="numero-100 brilho-neon">100</span>
+                        <span class="sub-texto">PAGESPEED INSIGHTS</span>
+                    </div>
                 </div>
             </div>
         </section>
 
-        <section id="servicos" class="differentials container">
-            <h2>MEU DIFERENCIAL TÉCNICO</h2>
-            <div class="glass-panel">
-                <div class="feature">
-                    <img src="/img/icon-code.svg" alt="Ícone representando código puro e sem frameworks" class="feature-icon" width="60" height="60">
-                    <h3>HTML/CSS PURO</h3>
-                    <p>(Zero Frameworks)</p>
-                </div>
-                <div class="feature">
-                    <img src="/img/icon-google-integrity.svg" alt="Ícone exclusivo unindo G de Google e Q de Qualidade" class="feature-icon" width="60" height="60">
-                    <h3>INTEGRAÇÃO GOOGLE</h3>
-                    <p>Total</p>
-                </div>
-                <div class="feature">
-                    <img src="/img/icon-speed.svg" alt="Ícone de raio representando velocidade e performance instantânea" class="feature-icon" width="60" height="60">
-                    <h3>CORE WEB VITALS</h3>
-                    <p>Excelentes</p>
-                </div>
+        <div class="divisor container revelar">
+            <span class="linha"></span>
+            <span class="texto-central">MEUS DIFERENCIAS TÉCNICOS</span>
+            <span class="linha"></span>
+        </div>
+
+        <section id="servicos" class="secao-grade container revelar">
+            <div class="card-servico">
+                <h3 class="cor-neon">Performance</h3>
+                <p>Otimização de Core Web Vitals para carregamento abaixo de 1 segundo.</p>
+            </div>
+            <div class="card-servico">
+                <h3 class="cor-neon">SEO Técnico</h3>
+                <p>Arquitetura de dados limpa para dominar os resultados orgânicos do Google.</p>
+            </div>
+            <div class="card-servico">
+                <h3 class="cor-neon">Experiência</h3>
+                <p>Interfaces fluidas e responsivas focadas em conversão de usuários.</p>
             </div>
         </section>
     </main>
 
-    <footer class="main-footer container">
-        <p>&copy; 2026 WEBDEV_VANILLA</p>
-        <div class="performance-tag">SITE RENDERIZADO EM <span class="green">0.04s</span></div>
-        <nav class="footer-nav">
-            <a href="#">Termos</a>
-            <a href="#">Privacidade</a>
-        </nav>
+    <footer class="rodape-moderno revelar">
+        <div class="container grade-rodape">
+            <div class="col-rodape">
+                <a href="#" class="logo-marca">
+                <span class="simbolo-code">&lt;/&gt;</span> CLAUDIOSCHMIDT<span>.dev</span>
+                </a>
+                <p class="txt-rodape">Desenvolvimento WEB focado em conversão e geração de resultados reais.</p>
+                <div class="status-sistema">
+                    <span class="ponto-status"></span> STATUS: <span class="cor-neon">ONLINE</span>
+                </div>
+            </div>
+            
+            <div class="col-rodape">
+                <h4 class="tit-rodape">CONECTAR</h4>
+                <div class="contatos-card">
+                    <a href="https://wa.me/5547992385131" target="_blank" class="item-contato">
+                        WHATSAPP <span class="cor-neon">(47) 99238-5131</span>
+                    </a>
+                    <a href="https://www.instagram.com/claudioschmidt.dev" target="_blank" class="item-contato">
+                        INSTAGRAM <span class="cor-neon">@claudioschmidt.dev</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+        
+        <div class="assinatura">
+            <div class="container flex-assinatura">
+                <p>© 2026 CLAUDIOSCHMIDT.dev</p>
+                <p>Site totalmente desenvolvido com as tecnologias: <span class="txt-brilhante"> HTML / CSS / JavaScript</span></p>
+            </div>
+        </div>
     </footer>
 
+    <script src="js/script.js"></script>
 </body>
 </html>

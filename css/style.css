@@ -1,235 +1,504 @@
-/* WEBDEV_VANILLA - CSS Performance Pro
-   Foco: Semântica, Velocidade e Estética Cyber-Clean
+/* CLAUDIOSCHMIDT.dev - Estilo de Elite 
+    Foco: Performance, Centralização 3D e UX Premium
 */
 
-:root {
-    /* Cores e Identidade */
-    --bg-deep: #050a14;
-    --accent-green: #39ff14;
-    --text-white: #e0e6ed;
-    
-    /* Efeito Glassmorphism */
-    --glass-bg: rgba(255, 255, 255, 0.03);
-    --glass-border: rgba(57, 255, 20, 0.2);
-    
-    /* Caminho Corrigido (Sai da pasta /css/ e entra na /img/) */
-    --bg-svg: url('/img/bg-data-stream.svg');
+/* --- 1. CONFIGURAÇÕES BASE & VARIÁVEIS --- */
+* { 
+    margin: 0; 
+    padding: 0; 
+    box-sizing: border-box; 
+    -webkit-font-smoothing: antialiased;
 }
 
-/* 1. Reset e Configurações Globais */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+:root {
+    --neon: #39ff14;
+    --fundo-dark: #02050a; 
+    --verde-profundo: #051a05; 
+    --branco: #ffffff;
+    --texto: #e0e6ed;
+    --transição: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
 html {
     scroll-behavior: smooth;
+    scroll-padding-top: 100px;
 }
 
 body {
     font-family: 'Montserrat', sans-serif;
-    background-color: var(--bg-deep);
-    color: var(--text-white);
-    line-height: 1.6;
-    overflow-x: hidden;
-    min-height: 100vh;
-    
-    /* Camada 1: Gradiente Radial de Profundidade no Topo */
-    background-image: radial-gradient(circle at 50% -10%, rgba(57, 255, 20, 0.08) 0%, transparent 50%);
+    background: radial-gradient(circle at 50% 0%, var(--verde-profundo) 0%, var(--fundo-dark) 80%);
+    background-color: var(--fundo-dark);
     background-attachment: fixed;
+    color: var(--texto);
+    overflow-x: hidden;
+    line-height: 1.6;
 }
 
-/* Camada 2: Chuva de Dados SVG (Background Fixo) */
-body::before {
-    content: '';
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-image: var(--bg-svg);
-    background-repeat: no-repeat;
-    background-position: top center;
-    background-size: cover;
-    opacity: 0.8; /* Ajuste aqui a visibilidade dos dados */
-    z-index: -1;
-    pointer-events: none;
+.container { 
+    max-width: 1200px; 
+    margin: 0 auto; 
+    padding: 0 25px; 
 }
 
-.container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 0 25px;
+/* --- 2. AUXILIARES DE ESTILO --- */
+.cor-neon { color: var(--neon); }
+.cor-branca { color: var(--branco); }
+.brilho-neon { text-shadow: 0 0 25px rgba(57, 255, 20, 0.7); }
+
+.revelar {
+    opacity: 0;
+    transform: translateY(40px);
+    transition: all 0.9s cubic-bezier(0.17, 0.55, 0.55, 1);
 }
 
-/* 2. Cabeçalho e Navegação */
-/* --- Header Fixo com Efeito Glassmorphism --- */
-.main-header {
-    position: fixed; /* Fixa o menu no topo */
-    top: 0;
-    left: 0;
-    width: 100%;
-    padding: 20px 0;
-    z-index: 1000; /* Garante que fique acima de tudo */
-    
-    /* Efeito de transparência e desfoque ao rolar */
-    background: rgba(5, 10, 20, 0.8); /* Azul profundo translúcido */
-    backdrop-filter: blur(10px); /* Desfoca o que passa por trás */
-    -webkit-backdrop-filter: blur(10px);
-    
-    border-bottom: 1px solid rgba(57, 255, 20, 0.1); /* Linha sutil verde */
-    transition: all 0.3s ease;
+.revelar.visivel {
+    opacity: 1;
+    transform: translateY(0);
 }
 
-/* Ajuste no Container do Nav */
-.main-header nav {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+/* --- 3. CABEÇALHO (MENU) --- */
+.cabecalho-fixo {
+    position: fixed; 
+    top: 0; left: 0; width: 100%;
+    background: rgba(2, 5, 10, 0.88);
+    backdrop-filter: blur(15px);
+    border-bottom: 1px solid rgba(57, 255, 20, 0.08);
+    z-index: 1000; 
+    padding: 15px 0;
+    transition: var(--transição);
 }
 
-/* --- AJUSTE CRÍTICO NO BODY --- */
-body {
-    /* Como o menu agora é fixo, ele "flutua". 
-       Precisamos de um padding no topo para o conteúdo não começar 
-       atrás do menu. Ajuste conforme a altura do seu header. */
-    padding-top: 100px; 
-}
-.main-header nav {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+.navegacao { 
+    display: flex; 
+    justify-content: space-between; 
+    align-items: center; 
 }
 
-.logo {
-    font-weight: 800;
-    font-size: 1.6rem;
+.logo-marca {
+    text-decoration: none; 
+    color: var(--branco); 
+    font-weight: 900; 
+    font-size: 1.25rem;
     letter-spacing: -1px;
+}
+.logo-marca span { color: var(--neon); }
+
+.lista-menu { 
+    display: flex; 
+    align-items: center; 
+    gap: 30px; 
+    list-style: none; 
+}
+
+.lista-menu a {
+    text-decoration: none; 
+    color: var(--texto);
+    font-size: 0.75rem; 
+    font-weight: 700; 
     text-transform: uppercase;
+    transition: 0.3s;
 }
 
-.logo span { color: var(--accent-green); }
+.lista-menu a:hover:not(.botao-neon) { color: var(--neon); }
 
-.nav-links {
-    display: flex;
-    list-style: none;
-    gap: 35px;
-}
-
-.nav-links a {
-    text-decoration: none;
-    color: var(--text-white);
-    text-transform: uppercase;
-    font-size: 0.85rem;
-    font-weight: 700;
-    letter-spacing: 1px;
-    transition: color 0.3s ease;
-}
-
-.nav-links a:hover, .nav-links a.active {
-    color: var(--accent-green);
-}
-
-/* 3. Hero Section (Destaque Principal) */
-.hero {
-    display: grid;
-    grid-template-columns: 1.2fr 0.8fr;
-    align-items: center;
-    padding: 100px 0;
-    min-height: 75vh;
-}
-
-h1 {
-    font-size: 3.8rem;
-    font-weight: 800;
-    line-height: 1.05;
-    margin-bottom: 25px;
-    letter-spacing: -2px;
-}
-
-.highlight { color: var(--accent-green); }
-
-.hero p {
-    max-width: 520px;
-    margin-bottom: 45px;
-    font-size: 1.1rem;
-    opacity: 0.85;
-}
-
-.btn-cta {
-    display: inline-block;
-    padding: 20px 40px;
-    border: 2px solid var(--accent-green);
-    color: var(--accent-green);
-    text-decoration: none;
-    font-weight: 700;
-    text-transform: uppercase;
+/* --- 4. BOTÕES --- */
+.botao-neon {
+    display: inline-block; 
+    padding: 18px 35px;
+    border: 2px solid var(--neon); 
+    color: var(--neon) !important;
+    text-decoration: none; 
+    font-weight: 900; 
     border-radius: 4px;
-    letter-spacing: 1px;
-    transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
-}
-
-.btn-cta:hover {
-    background: var(--accent-green);
-    color: var(--bg-deep);
-    box-shadow: 0 0 35px rgba(57, 255, 20, 0.5);
-    transform: translateY(-2px);
-}
-
-/* Elemento Visual de Performance (Lado Direito) */
-.stats-card {
-    background: var(--glass-bg);
-    border: 1px solid var(--glass-border);
-    padding: 40px;
-    border-radius: 20px;
-    text-align: center;
-    backdrop-filter: blur(8px);
-    width: fit-content;
-    margin-left: auto;
-}
-
-.score {
-    display: block;
-    font-size: 5rem;
-    font-weight: 800;
-    color: var(--accent-green);
-    line-height: 1;
-}
-
-/* 4. Diferenciais (Glass Panel) */
-.differentials {
-    padding: 80px 0;
-    text-align: center;
-}
-
-.differentials h2 {
-    font-size: 1rem;
-    margin-bottom: 40px;
-    letter-spacing: 4px;
     text-transform: uppercase;
-    opacity: 0.6;
+    letter-spacing: 1px;
+    transition: var(--transição);
 }
 
-.glass-panel {
-    background: var(--glass-bg);
-    border: 1px solid var(--glass-border);
-    backdrop-filter: blur(12px);
-    border-radius: 20px;
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    padding: 60px 40px;
-    gap: 30px;
+.botao-neon.pequeno { padding: 8px 18px; font-size: 0.7rem; }
+
+.botao-neon:hover {
+    background: var(--neon); 
+    color: var(--fundo-dark) !important;
+    box-shadow: 0 0 30px rgba(57, 255, 20, 0.6); 
+    transform: translateY(-5px);
 }
 
-.feature-icon {
-    display: block;
-    margin: 0 auto 20px;
-    transition: transform 0.3s ease;
+/* --- /css/style.css --- */
+
+/* ... (Mantenha o topo do arquivo igual) ... */
+
+/* --- 5. HERO SECTION & SOLUÇÃO DE CENTRALIZAÇÃO 3D --- */
+.secao-destaque { 
+    display: flex; 
+    align-items: center; 
+    min-height: 100vh; /* Ocupa a tela inteira para máximo impacto visual */
+    padding: 100px 0; /* Aumentei o respiro vertical */
 }
 
-.feature:hover .feature-icon {
-    transform: scale(1.1);
+.texto-principal { flex: 1.2; z-index: 10; }
+
+h1 { 
+    font-size: 3.8rem; 
+    font-weight: 900; 
+    line-height: 1; 
+    margin-bottom: 35px; /* Aumentei ligeiramente o espaço */
+    letter-spacing: -2px; 
 }
 
-.feature h
+.texto-principal p { 
+    max-width: 480px; 
+    opacity: 0.85; 
+    font-size: 1.15rem; /* Fonte um pouco maior para leitura premium */
+    margin-bottom: 60px; /* Respiro generoso para o CTA */
+    text-shadow: 0 0 15px rgba(255, 255, 255, 0.1);
+}
+
+/* --- A MÁGICA DO 3D ESTÁ AQUI --- */
+
+/* 1. O PAI: Define a perspectiva para toda a cena */
+.container-visual { 
+    flex: 0.8; 
+    display: flex; 
+    justify-content: flex-end; /* Alinha o bloco à direita na grade */
+    align-items: center; /* Centraliza verticalmente na Hero */
+    perspective: 2000px; /* Aumentei a perspectiva para suavizar a distorção */
+}
+
+/* 2. O CONTAINER DE ROTAÇÃO: Aplica a rotação Y */
+.elemento-3d {
+    position: relative; 
+    width: 420px; /* Tamanho massivo e impactante */
+    height: 420px;
+    
+    /* Centralização Flexbox Real */
+    display: flex; 
+    justify-content: center; 
+    align-items: center; 
+
+    /* Configurações 3D */
+    transform-style: preserve-3d;
+    transform: rotateY(-18deg); /* Rotação ligeiramente mais agressiva */
+    
+    /* Filtro de brilho sutil no container inteiro */
+    filter: drop-shadow(0 0 15px rgba(57, 255, 20, 0.15));
+}
+
+/* 3. O CÍRCULO (FUNDO): Fica no plano Z=0 */
+.circulo-decorativo {
+    position: absolute; 
+    width: 100%; 
+    height: 100%;
+    border: 2px solid rgba(57, 255, 20, 0.15); /* Borda neon sutil */
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(57, 255, 20, 0.05) 0%, transparent 75%);
+    z-index: 1;
+}
+
+/* 4. A PLACA (CONTEÚDO): Salta para frente no eixo Z */
+.placa-performance { 
+    position: relative;
+    z-index: 2;
+    text-align: center; 
+    
+    /* Traz o número para frente (Z), criando a profundidade */
+    transform: translateZ(120px); 
+    
+    /* A animação agora é aplicada APENAS ao conteúdo que flutua */
+    animation: flutuar 4s ease-in-out infinite; 
+    
+    /* Garante que o conteúdo interno também use flex para centralizar */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.numero-100 { 
+    font-size: 11.5rem; /* Número massivo e autoritário */
+    font-weight: 900; 
+    color: var(--neon); 
+    line-height: 0.9; /* Compacta o número */
+    text-shadow: 0 0 30px rgba(57, 255, 20, 0.8); /* Brilho neon intenso */
+}
+
+.sub-texto { 
+    display: block; 
+    font-size: 0.8rem; 
+    letter-spacing: 5px; /* Industrial e clean */
+    opacity: 0.6; 
+    text-transform: uppercase;
+    margin-top: 15px; /* Espaço corrigido sob o número */
+}
+
+/* ... (Mantenha o resto do arquivo igual) ... */
+
+/* Container do Visual 3D */
+.container-visual { 
+    flex: 0.8; 
+    display: flex; 
+    justify-content: flex-end; 
+    perspective: 1500px; 
+}
+
+.elemento-3d {
+    position: relative; 
+    width: 400px; 
+    height: 400px;
+    display: flex; 
+    justify-content: center; 
+    align-items: center; /* Centraliza tudo matematicamente */
+    transform-style: preserve-3d;
+    transform: rotateY(-15deg);
+}
+
+.circulo-decorativo {
+    position: absolute; 
+    width: 100%; 
+    height: 100%;
+    border: 2px solid rgba(57, 255, 20, 0.1); 
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(57, 255, 20, 0.05) 0%, transparent 70%);
+    z-index: 1;
+}
+
+.placa-performance { 
+    position: relative;
+    z-index: 2;
+    text-align: center; 
+    transform: translateZ(100px); /* Traz o número para frente */
+    animation: flutuar 4s ease-in-out infinite; 
+}
+
+.numero-100 { 
+    font-size: 11rem; 
+    font-weight: 900; 
+    color: var(--neon); 
+    line-height: 0.9; 
+}
+
+.sub-texto { 
+    display: block; 
+    font-size: 0.8rem; 
+    letter-spacing: 5px; 
+    opacity: 0.6; 
+    text-transform: uppercase;
+    margin-top: 10px;
+}
+
+/* --- 6. ELEMENTOS DE GRADE E DIVISORES --- */
+.divisor { 
+    display: flex; 
+    align-items: center; 
+    gap: 20px; 
+    padding: 20px 0 80px 0; 
+    opacity: 0.2; 
+}
+
+.linha { flex: 1; height: 1px; background: var(--texto); }
+.texto-central { font-size: 1.2rem; font-weight: 900; letter-spacing: 5px; }
+
+.secao-grade { 
+    display: grid; 
+    grid-template-columns: repeat(3, 1fr); 
+    gap: 30px; 
+    padding-bottom: 120px; 
+}
+
+.card-servico {
+    background: rgba(255, 255, 255, 0.02); 
+    padding: 45px; 
+    border-radius: 4px;
+    border: 1px solid rgba(255, 255, 255, 0.05); 
+    transition: var(--transição);
+}
+
+.card-servico:hover { 
+    border-color: var(--neon); 
+    background: rgba(57, 255, 20, 0.03);
+    transform: translateY(-10px); 
+}
+
+.card-servico h3 { margin-bottom: 15px; font-weight: 900; }
+
+/* --- 7. RODAPÉ (FOOTER) --- */
+.rodape-moderno { 
+    background: rgba(2, 5, 10, 0.98); 
+    padding-top: 80px; 
+    border-top: 1px solid rgba(255,255,255,0.05); 
+}
+
+.grade-rodape { 
+    display: grid; 
+    grid-template-columns: 1.5fr 1.2fr; 
+    gap: 60px; 
+    padding-bottom: 60px; 
+}
+
+.logo-rodape { font-weight: 900; color: var(--branco); margin-bottom: 25px; font-size: 1.4rem; }
+.logo-rodape span { color: var(--neon); }
+
+.txt-rodape { font-size: 0.9rem; opacity: 0.6; max-width: 300px; margin-bottom: 25px; text-align: left; }
+
+.status-sistema { 
+    font-size: 0.7rem; 
+    font-weight: 900; 
+    display: flex; 
+    align-items: center; 
+    gap: 10px; 
+    letter-spacing: 1px;
+}
+
+.ponto-status { 
+    width: 8px; height: 8px; 
+    background: var(--neon); 
+    border-radius: 50%; 
+    box-shadow: 0 0 10px var(--neon); 
+    animation: pulse 2s infinite;
+}
+
+.contatos-card { display: flex; flex-direction: column; gap: 15px; }
+
+.item-contato {
+    text-decoration: none; 
+    color: var(--branco); 
+    font-size: 0.8rem; 
+    font-weight: 900;
+    background: rgba(255,255,255,0.03); 
+    padding: 20px; 
+    border-radius: 4px;
+    border: 1px solid rgba(255,255,255,0.06); 
+    transition: 0.3s;
+}
+
+.item-contato span { display: block; font-size: 1rem; margin-top: 5px; }
+
+.item-contato:hover { 
+    background: rgba(57, 255, 20, 0.08); 
+    border-color: var(--neon); 
+    transform: scale(1.02);
+}
+
+.assinatura { 
+    background: #010307; 
+    padding: 35px 0; 
+    font-size: 0.75rem; 
+    border-top: 1px solid rgba(255,255,255,0.02); 
+}
+
+.flex-assinatura { display: flex; justify-content: space-between; opacity: 0.4; }
+
+/* --- 8. ANIMAÇÕES --- */
+@keyframes flutuar { 
+    0%, 100% { transform: translateZ(100px) translateY(0); } 
+    50% { transform: translateZ(100px) translateY(-25px); } 
+}
+
+@keyframes pulse {
+    0% { transform: scale(1); opacity: 1; }
+    50% { transform: scale(1.5); opacity: 0.5; }
+    100% { transform: scale(1); opacity: 1; }
+}
+
+/* --- 9. RESPONSIVIDADE --- */
+@media (max-width: 950px) {
+    .secao-destaque { flex-direction: column; text-align: center; padding-top: 120px; }
+    .texto-principal p { margin: 0 auto 50px auto; }
+    .container-visual { justify-content: center; margin-top: 60px; width: 100%; }
+    .elemento-3d { width: 300px; height: 300px; }
+    .numero-100 { font-size: 8rem; }
+    h1 { font-size: 2.8rem; }
+    .secao-grade { grid-template-columns: 1fr; }
+    .grade-rodape { grid-template-columns: 1fr; text-align: center; }
+    .col-rodape { display: flex; flex-direction: column; align-items: center; }
+}
+
+/* --- MENU HAMBÚRGUER (ESTILO) --- */
+.menu-hamburguer {
+    display: none; /* Escondido no desktop */
+    background: none;
+    border: none;
+    cursor: pointer;
+    flex-direction: column;
+    gap: 6px;
+    z-index: 1001;
+}
+
+.barrinha {
+    width: 30px;
+    height: 3px;
+    background-color: var(--neon);
+    border-radius: 2px;
+    transition: 0.4s;
+}
+
+/* --- RESPONSIVIDADE (MOBILE REFATORADO) --- */
+@media (max-width: 950px) {
+    /* Garante que o botão hambúrguer fique visível sobre tudo */
+    .menu-hamburguer { 
+        display: flex; 
+        z-index: 2000; 
+    }
+
+    .lista-menu {
+        display: flex; /* Força o display flex que pode ter sido perdido */
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 40px;
+
+        /* Posicionamento Fora da Tela */
+        position: fixed;
+        top: 0;
+        right: -100%; 
+        width: 100%; /* Ocupa a largura total para evitar bugs de clique */
+        height: 100vh;
+        
+        /* Visual Glassmorphism Escuro */
+        background: rgba(2, 5, 10, 0.98);
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+        
+        transition: 0.5s cubic-bezier(0.77, 0.2, 0.05, 1);
+        z-index: 1500; /* Abaixo do botão, acima de tudo mais */
+        border-left: 1px solid rgba(57, 255, 20, 0.1);
+    }
+
+    /* Classe ativada pelo JavaScript */
+    .lista-menu.ativo {
+        right: 0; 
+    }
+
+    /* Links Maiores para facilitar o toque (Touch Targets) */
+    .lista-menu li {
+        width: 100%;
+        text-align: center;
+    }
+
+    .lista-menu a {
+        font-size: 1.5rem; /* Fonte maior para mobile */
+        display: block;
+        padding: 15px;
+        color: var(--branco);
+        letter-spacing: 2px;
+    }
+
+    /* Ajuste do botão de contato dentro do menu mobile */
+    .lista-menu .botao-neon.pequeno {
+        display: inline-block;
+        font-size: 1rem;
+        padding: 15px 40px;
+        margin-top: 20px;
+    }
+
+    /* Animação do X (Hambúrguer) */
+    .menu-hamburguer.aberto .barrinha:nth-child(1) {
+        transform: rotate(45deg) translate(6px, 6px);
+    }
+    .menu-hamburguer.aberto .barrinha:nth-child(2) {
+        opacity: 0;
+    }
+    .menu-hamburguer.aberto .barrinha:nth-child(3) {
+        transform: rotate(-45deg) translate(6px, -7px);
+    }
+}
