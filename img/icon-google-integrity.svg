@@ -1,0 +1,14 @@
+<svg width="60" height="60" viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+  <path d="M30 10C18.9543 10 10 18.9543 10 30C10 41.0457 18.9543 50 30 50C36.166 50 41.7107 47.199 45.4141 42.793L38 35" stroke="#39FF14" stroke-width="4" stroke-linecap="round" filter="url(#glow)"/>
+  <path d="M30 30H50V35" stroke="#39FF14" stroke-width="4" stroke-linecap="round" filter="url(#glow)"/>
+  <path d="M45 45L55 55" stroke="#39FF14" stroke-width="4" stroke-linecap="round" filter="url(#glow)"/>
+</svg>

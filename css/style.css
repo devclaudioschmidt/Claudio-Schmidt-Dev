@@ -1,0 +1,235 @@
+/* WEBDEV_VANILLA - CSS Performance Pro
+   Foco: Semântica, Velocidade e Estética Cyber-Clean
+*/
+
+:root {
+    /* Cores e Identidade */
+    --bg-deep: #050a14;
+    --accent-green: #39ff14;
+    --text-white: #e0e6ed;
+    
+    /* Efeito Glassmorphism */
+    --glass-bg: rgba(255, 255, 255, 0.03);
+    --glass-border: rgba(57, 255, 20, 0.2);
+    
+    /* Caminho Corrigido (Sai da pasta /css/ e entra na /img/) */
+    --bg-svg: url('/img/bg-data-stream.svg');
+}
+
+/* 1. Reset e Configurações Globais */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: 'Montserrat', sans-serif;
+    background-color: var(--bg-deep);
+    color: var(--text-white);
+    line-height: 1.6;
+    overflow-x: hidden;
+    min-height: 100vh;
+    
+    /* Camada 1: Gradiente Radial de Profundidade no Topo */
+    background-image: radial-gradient(circle at 50% -10%, rgba(57, 255, 20, 0.08) 0%, transparent 50%);
+    background-attachment: fixed;
+}
+
+/* Camada 2: Chuva de Dados SVG (Background Fixo) */
+body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: var(--bg-svg);
+    background-repeat: no-repeat;
+    background-position: top center;
+    background-size: cover;
+    opacity: 0.8; /* Ajuste aqui a visibilidade dos dados */
+    z-index: -1;
+    pointer-events: none;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 25px;
+}
+
+/* 2. Cabeçalho e Navegação */
+/* --- Header Fixo com Efeito Glassmorphism --- */
+.main-header {
+    position: fixed; /* Fixa o menu no topo */
+    top: 0;
+    left: 0;
+    width: 100%;
+    padding: 20px 0;
+    z-index: 1000; /* Garante que fique acima de tudo */
+    
+    /* Efeito de transparência e desfoque ao rolar */
+    background: rgba(5, 10, 20, 0.8); /* Azul profundo translúcido */
+    backdrop-filter: blur(10px); /* Desfoca o que passa por trás */
+    -webkit-backdrop-filter: blur(10px);
+    
+    border-bottom: 1px solid rgba(57, 255, 20, 0.1); /* Linha sutil verde */
+    transition: all 0.3s ease;
+}
+
+/* Ajuste no Container do Nav */
+.main-header nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* --- AJUSTE CRÍTICO NO BODY --- */
+body {
+    /* Como o menu agora é fixo, ele "flutua". 
+       Precisamos de um padding no topo para o conteúdo não começar 
+       atrás do menu. Ajuste conforme a altura do seu header. */
+    padding-top: 100px; 
+}
+.main-header nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    font-weight: 800;
+    font-size: 1.6rem;
+    letter-spacing: -1px;
+    text-transform: uppercase;
+}
+
+.logo span { color: var(--accent-green); }
+
+.nav-links {
+    display: flex;
+    list-style: none;
+    gap: 35px;
+}
+
+.nav-links a {
+    text-decoration: none;
+    color: var(--text-white);
+    text-transform: uppercase;
+    font-size: 0.85rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+    transition: color 0.3s ease;
+}
+
+.nav-links a:hover, .nav-links a.active {
+    color: var(--accent-green);
+}
+
+/* 3. Hero Section (Destaque Principal) */
+.hero {
+    display: grid;
+    grid-template-columns: 1.2fr 0.8fr;
+    align-items: center;
+    padding: 100px 0;
+    min-height: 75vh;
+}
+
+h1 {
+    font-size: 3.8rem;
+    font-weight: 800;
+    line-height: 1.05;
+    margin-bottom: 25px;
+    letter-spacing: -2px;
+}
+
+.highlight { color: var(--accent-green); }
+
+.hero p {
+    max-width: 520px;
+    margin-bottom: 45px;
+    font-size: 1.1rem;
+    opacity: 0.85;
+}
+
+.btn-cta {
+    display: inline-block;
+    padding: 20px 40px;
+    border: 2px solid var(--accent-green);
+    color: var(--accent-green);
+    text-decoration: none;
+    font-weight: 700;
+    text-transform: uppercase;
+    border-radius: 4px;
+    letter-spacing: 1px;
+    transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+}
+
+.btn-cta:hover {
+    background: var(--accent-green);
+    color: var(--bg-deep);
+    box-shadow: 0 0 35px rgba(57, 255, 20, 0.5);
+    transform: translateY(-2px);
+}
+
+/* Elemento Visual de Performance (Lado Direito) */
+.stats-card {
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    padding: 40px;
+    border-radius: 20px;
+    text-align: center;
+    backdrop-filter: blur(8px);
+    width: fit-content;
+    margin-left: auto;
+}
+
+.score {
+    display: block;
+    font-size: 5rem;
+    font-weight: 800;
+    color: var(--accent-green);
+    line-height: 1;
+}
+
+/* 4. Diferenciais (Glass Panel) */
+.differentials {
+    padding: 80px 0;
+    text-align: center;
+}
+
+.differentials h2 {
+    font-size: 1rem;
+    margin-bottom: 40px;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    opacity: 0.6;
+}
+
+.glass-panel {
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    backdrop-filter: blur(12px);
+    border-radius: 20px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    padding: 60px 40px;
+    gap: 30px;
+}
+
+.feature-icon {
+    display: block;
+    margin: 0 auto 20px;
+    transition: transform 0.3s ease;
+}
+
+.feature:hover .feature-icon {
+    transform: scale(1.1);
+}
+
+.feature h
