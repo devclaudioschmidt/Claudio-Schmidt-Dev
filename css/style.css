@@ -581,3 +581,627 @@ h1 {
     .grid-pilares { grid-template-columns: 1fr; }
     .header-pilares h2 { font-size: 2rem; }
 }
+
+/* --- 6. SEÇÃO SOBRE (AUTORIDADE & BIOGRAFIA) --- */
+.secao-sobre {
+    padding: 100px 0;
+    background: linear-gradient(to bottom, transparent, rgba(57, 255, 20, 0.02));
+}
+
+.grade-sobre {
+    display: grid;
+    grid-template-columns: 1fr 1.2fr;
+    gap: 80px;
+    align-items: center;
+}
+
+/* --- BLOCO VISUAL (ESQUERDA) --- */
+.sobre-visual {
+    display: flex;
+    justify-content: center;
+    position: relative;
+    perspective: 1000px; /* Adiciona profundidade para o efeito 3D */
+}
+
+.moldura-neon {
+    width: 300px;
+    height: 380px;
+    border: 1px solid rgba(57, 255, 20, 0.2);
+    border-radius: 12px;
+    position: relative;
+    box-shadow: 0 0 40px rgba(57, 255, 20, 0.03);
+    transition: 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+/* Estilização da sua Foto */
+.foto-perfil {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Garante que a foto não distorça */
+    border-radius: 12px;
+    filter: grayscale(40%) brightness(90%); /* Tom mais sóbrio inicial */
+    transition: 0.5s ease;
+    display: block;
+}
+
+/* Selo Flutuante (Glassmorphism) */
+.background-glass-overlay {
+    position: absolute;
+    bottom: -25px;
+    right: -25px;
+    padding: 18px 30px;
+    background: rgba(255, 255, 255, 0.03);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    z-index: 10;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    transition: 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275); /* Efeito elástico */
+}
+
+.label-experiencia {
+    font-size: 0.85rem;
+    color: var(--neon);
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    text-shadow: 0 0 10px rgba(57, 255, 20, 0.6);
+    white-space: nowrap;
+}
+
+/* --- INTERAÇÕES (HOVER) --- */
+.moldura-neon:hover {
+    border-color: var(--neon);
+    box-shadow: 0 0 50px rgba(57, 255, 20, 0.15);
+    transform: translateY(-5px);
+}
+
+.moldura-neon:hover .foto-perfil {
+    filter: grayscale(0%) brightness(100%);
+    transform: scale(1.03);
+}
+
+.moldura-neon:hover .background-glass-overlay {
+    transform: translate(-10px, -10px);
+    background: rgba(57, 255, 20, 0.05);
+    border-color: var(--neon);
+}
+
+/* --- TEXTO E CONTEÚDO (DIREITA) --- */
+.sobre-texto {
+    animation: aparecerDireita 1s ease forwards;
+}
+
+.subtitulo-neon {
+    color: var(--neon);
+    font-size: 0.9rem;
+    font-weight: 700;
+    letter-spacing: 4px;
+    display: block;
+    margin-bottom: 15px;
+}
+
+.sobre-texto h2 {
+    font-size: 3rem;
+    margin-bottom: 30px;
+    line-height: 1.1;
+    font-weight: 800;
+}
+
+.sobre-texto p {
+    font-size: 1.15rem;
+    line-height: 1.8;
+    color: rgba(255, 255, 255, 0.8);
+    margin-bottom: 25px;
+    max-width: 600px;
+}
+
+.sobre-texto strong {
+    color: #fff;
+    border-bottom: 1px solid var(--neon);
+}
+
+/* Badges Técnicas */
+.badges-tecnicas {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 40px;
+}
+
+.badge {
+    padding: 10px 20px;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: #fff;
+    font-size: 0.7rem;
+    font-weight: 700;
+    border-radius: 4px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    transition: 0.3s;
+}
+
+.badge:hover {
+    background: rgba(57, 255, 20, 0.1);
+    border-color: var(--neon);
+    color: var(--neon);
+    transform: translateY(-3px);
+}
+
+/* --- RESPONSIVIDADE --- */
+@media (max-width: 1100px) {
+    .grade-sobre { gap: 40px; }
+    .sobre-texto h2 { font-size: 2.5rem; }
+}
+
+@media (max-width: 950px) {
+    .grade-sobre {
+        grid-template-columns: 1fr;
+        text-align: center;
+        gap: 80px;
+    }
+    .sobre-visual { order: 2; }
+    .sobre-texto p { margin: 0 auto 25px auto; }
+    .badges-tecnicas { justify-content: center; }
+    
+    .background-glass-overlay {
+        right: 50%;
+        transform: translateX(50%);
+        bottom: -20px;
+    }
+    
+    .moldura-neon:hover .background-glass-overlay {
+        transform: translate(50%, -10px);
+    }
+}
+
+/* --- 8. SEÇÃO FAQ (AUTORIDADE E GESTÃO) --- */
+.secao-faq {
+    padding: 100px 0;
+    background: rgba(0, 0, 0, 0.2); /* Leve destaque de fundo */
+}
+
+.faq-header {
+    text-align: center;
+    margin-bottom: 60px;
+}
+
+.lista-faq {
+    max-width: 850px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 15px; /* Espaçamento entre as perguntas */
+}
+
+/* Elemento Nativo de Acordeão */
+details {
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+/* Estado quando a pergunta está aberta */
+details[open] {
+    background: rgba(57, 255, 20, 0.03);
+    border-color: rgba(57, 255, 20, 0.4);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+}
+
+/* Cabeçalho da Pergunta */
+summary {
+    padding: 22px 30px;
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #fff;
+    list-style: none; /* Remove a seta padrão */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    outline: none;
+}
+
+/* Removendo a seta padrão no Safari/Firefox */
+summary::-webkit-details-marker {
+    display: none;
+}
+
+/* Ícone Customizado (+ / -) */
+summary::after {
+    content: '+';
+    font-size: 1.6rem;
+    color: var(--neon);
+    transition: transform 0.3s ease;
+    font-family: monospace;
+}
+
+details[open] summary::after {
+    content: '-';
+    transform: rotate(180deg);
+}
+
+/* Conteúdo da Resposta */
+.faq-content {
+    padding: 0 30px 25px 30px;
+    color: rgba(255, 255, 255, 0.7);
+    line-height: 1.8;
+    font-size: 1rem;
+    animation: slideDown 0.4s ease-out; /* Animação suave ao abrir */
+}
+
+.faq-content strong {
+    color: var(--neon);
+    font-weight: 600;
+}
+
+/* Chamada para ação no rodapé da FAQ */
+.faq-footer {
+    text-align: center;
+    margin-top: 50px;
+    font-size: 1.1rem;
+}
+
+.faq-footer p {
+    color: rgba(255, 255, 255, 0.6);
+}
+
+.faq-footer a {
+    color: var(--neon);
+    text-decoration: none;
+    font-weight: bold;
+    border-bottom: 1px solid transparent;
+    transition: 0.3s;
+    margin-left: 8px;
+}
+
+.faq-footer a:hover {
+    border-bottom: 1px solid var(--neon);
+    text-shadow: 0 0 10px rgba(57, 255, 20, 0.5);
+}
+
+/* Animação de entrada do texto */
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Ajustes Mobile */
+@media (max-width: 768px) {
+    .secao-faq { padding: 60px 20px; }
+    summary { padding: 18px 20px; font-size: 1rem; }
+    .faq-content { padding: 0 20px 20px 20px; }
+}
+
+
+/* --- 10. SEÇÃO PERFORMANCE & LUCRO (ESTRATÉGIA BUSINESS) --- */
+.secao-performance {
+    padding: 100px 0;
+    background: linear-gradient(to bottom, rgba(0,0,0,0.5), rgba(57, 255, 20, 0.02));
+    border-top: 1px solid rgba(255, 255, 255, 0.03);
+}
+
+.header-centralizado {
+    text-align: center;
+    margin-bottom: 70px;
+}
+
+.desc-performance {
+    max-width: 700px;
+    margin: 20px auto 0;
+    color: rgba(255, 255, 255, 0.6);
+    line-height: 1.8;
+    font-size: 1.1rem;
+}
+
+/* Grade de Cards de Negócio */
+.grade-vitals {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 35px;
+}
+
+.card-vital {
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    padding: 40px;
+    border-radius: 16px;
+    display: flex;
+    flex-direction: column;
+    transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+    position: relative;
+    overflow: hidden;
+}
+
+/* Efeito de brilho sutil ao passar o mouse */
+.card-vital:hover {
+    transform: translateY(-10px);
+    background: rgba(57, 255, 20, 0.02);
+    border-color: var(--neon);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+}
+
+.vital-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 25px;
+}
+
+.icone-negocio {
+    font-size: 2.5rem;
+    filter: drop-shadow(0 0 10px rgba(255,255,255,0.1));
+}
+
+.status.bom {
+    font-size: 0.7rem;
+    font-weight: 900;
+    color: var(--neon);
+    background: rgba(57, 255, 20, 0.1);
+    padding: 5px 12px;
+    border-radius: 4px;
+    border: 1px solid var(--neon);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+}
+
+.card-vital h3 {
+    color: #fff;
+    font-size: 1.4rem;
+    margin-bottom: 15px;
+    font-weight: 700;
+}
+
+.card-vital p {
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 1rem;
+    line-height: 1.6;
+    margin-bottom: 30px;
+    flex-grow: 1; /* Garante que os gráficos fiquem alinhados embaixo */
+}
+
+.card-vital strong {
+    color: var(--neon);
+}
+
+/* --- GRÁFICOS DE SUCESSO --- */
+.grafico-cwv {
+    width: 100%;
+    margin-top: 20px;
+}
+
+.barra-fundo {
+    height: 10px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 20px;
+    overflow: hidden;
+    position: relative;
+}
+
+.barra-preenchida {
+    height: 100%;
+    background: linear-gradient(90deg, #0a2b08 0%, var(--neon) 100%);
+    width: 0; /* Começa em 0 para animar via JS/Scroll */
+    border-radius: 20px;
+    box-shadow: 0 0 15px rgba(57, 255, 20, 0.3);
+}
+
+.legenda-grafico {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 12px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: rgba(255, 255, 255, 0.3);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.marca-bom {
+    color: var(--neon);
+    opacity: 1;
+}
+
+/* --- ANIMAÇÕES (Ativadas pela classe .visivel do JS) --- */
+.revelar.visivel .LCP-bar { animation: animarBarra 1.5s ease-out forwards 0.2s; }
+.revelar.visivel .CLS-bar { animation: animarBarra 1.5s ease-out forwards 0.4s; }
+.revelar.visivel .INP-bar { animation: animarBarra 1.5s ease-out forwards 0.6s; }
+
+@keyframes animarBarra {
+    from { width: 0; }
+    to { width: 95%; } /* Representa o sucesso do site do cliente */
+}
+
+/* Responsividade */
+@media (max-width: 1024px) {
+    .grade-vitals { gap: 20px; }
+    .card-vital { padding: 30px; }
+}
+
+@media (max-width: 850px) {
+    .grade-vitals { grid-template-columns: 1fr; }
+    .card-vital { max-width: 500px; margin: 0 auto; width: 100%; }
+}
+
+
+/* --- 11. SEÇÃO PROCESSO (COMO EU TRABALHO) --- */
+.secao-processo {
+    padding: 100px 0;
+}
+
+.linha-processo {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 40px;
+    margin-top: 50px;
+}
+
+.card-processo {
+    display: flex;
+    gap: 25px;
+    background: rgba(255, 255, 255, 0.02);
+    padding: 35px;
+    border-radius: 12px;
+    border-left: 4px solid rgba(57, 255, 20, 0.1);
+    transition: 0.4s;
+    position: relative;
+}
+
+.card-processo:hover {
+    background: rgba(57, 255, 20, 0.03);
+    border-left-color: var(--neon);
+    transform: translateX(10px);
+}
+
+.num-processo {
+    font-size: 2.5rem;
+    font-weight: 900;
+    color: var(--neon);
+    opacity: 0.3;
+    font-family: monospace;
+    line-height: 1;
+}
+
+.box-conteudo h3 {
+    color: #fff;
+    font-size: 1.3rem;
+    margin-bottom: 12px;
+}
+
+.box-conteudo p {
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 0.95rem;
+    line-height: 1.6;
+}
+
+/* Efeito de Conexão Sutil (Opcional) */
+.card-processo::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 0;
+    height: 100%;
+    background: linear-gradient(to bottom, transparent, var(--neon), transparent);
+    width: 2px;
+    opacity: 0;
+    transition: 0.4s;
+}
+
+.card-processo:hover::before {
+    opacity: 1;
+}
+
+/* Responsividade Processo */
+@media (max-width: 850px) {
+    .linha-processo {
+        grid-template-columns: 1fr;
+    }
+    .card-processo:hover {
+        transform: translateY(-5px);
+    }
+}
+
+
+/* --- 12. SEÇÃO CONTATO (NACIONAL) --- */
+.secao-contato { padding: 100px 0; border-top: 1px solid rgba(255,255,255,0.03); }
+
+.grade-contato {
+    display: grid;
+    grid-template-columns: 1fr 1.5fr;
+    gap: 60px;
+    align-items: start;
+}
+
+.contato-info { display: flex; flex-direction: column; gap: 20px; }
+
+.card-direto {
+    background: rgba(255, 255, 255, 0.02);
+    padding: 25px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    transition: 0.3s;
+}
+
+.card-direto:hover { border-color: var(--neon); background: rgba(57, 255, 20, 0.01); }
+
+.icone-contato { font-size: 2rem; }
+.card-direto h4 { color: var(--neon); font-size: 0.85rem; text-transform: uppercase; margin-bottom: 5px; letter-spacing: 1px; }
+.card-direto p { color: #fff; font-weight: 500; font-size: 0.95rem; }
+
+.link-neon { color: #fff; text-decoration: none; font-weight: bold; border-bottom: 2px solid var(--neon); transition: 0.3s; }
+.link-neon:hover { color: var(--neon); text-shadow: 0 0 10px rgba(57, 255, 20, 0.4); }
+
+/* Form Design */
+.form-contato {
+    background: rgba(255, 255, 255, 0.01);
+    padding: 45px;
+    border-radius: 16px;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.grupo-input { display: flex; flex-direction: column; gap: 10px; }
+.grupo-input label { color: rgba(255, 255, 255, 0.5); font-size: 0.85rem; font-weight: 600; text-transform: uppercase; }
+
+.grupo-input input, 
+.grupo-input select, 
+.grupo-input textarea {
+    background: #080808;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 16px;
+    color: #fff;
+    border-radius: 8px;
+    font-family: inherit;
+    font-size: 1rem;
+    transition: 0.3s;
+}
+
+.grupo-input input:focus, .grupo-input select:focus, .grupo-input textarea:focus {
+    outline: none;
+    border-color: var(--neon);
+    box-shadow: 0 0 15px rgba(57, 255, 20, 0.1);
+}
+
+.btn-enviar-projeto {
+    background: var(--neon);
+    color: #000;
+    font-weight: 900;
+    padding: 22px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    transition: 0.4s;
+    margin-top: 15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 12px;
+}
+
+.btn-enviar-projeto:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 15px 35px rgba(57, 255, 20, 0.3);
+    background: #4efd1d;
+}
+
+@media (max-width: 900px) {
+    .grade-contato { grid-template-columns: 1fr; }
+    .form-contato { padding: 30px 20px; }
+}
