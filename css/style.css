@@ -132,8 +132,8 @@ body {
 .secao-destaque { 
     display: flex; 
     align-items: center; 
-    min-height: 100vh; /* Ocupa a tela inteira para máximo impacto visual */
-    padding: 100px 0; /* Aumentei o respiro vertical */
+    min-height: 80vh; /* Ocupa a tela inteira para máximo impacto visual */
+    padding: 60px 0; /* Aumentei o respiro vertical */
 }
 
 .texto-principal { flex: 1.2; z-index: 10; }
@@ -291,7 +291,7 @@ h1 {
     display: flex; 
     align-items: center; 
     gap: 20px; 
-    padding: 20px 0 80px 0; 
+    padding: 20px 0 40px 0; 
     opacity: 0.2; 
 }
 
@@ -501,4 +501,83 @@ h1 {
     .menu-hamburguer.aberto .barrinha:nth-child(3) {
         transform: rotate(-45deg) translate(6px, -7px);
     }
+}
+
+/* --- SEÇÃO PILARES --- */
+.secao-pilares { padding: 60px 0 100px 0; 
+}
+
+.header-pilares { text-align: center; margin-bottom: 70px; }
+.subtitulo-neon { 
+    font-size: 0.75rem; 
+    letter-spacing: 5px; 
+    color: var(--neon); 
+    font-weight: 900; 
+    display: block; 
+    margin-bottom: 15px;
+}
+.header-pilares h2 { font-size: 2.8rem; font-weight: 900; line-height: 1.1; }
+.header-pilares p { max-width: 600px; margin: 20px auto 0; opacity: 0.7; }
+
+.grid-pilares {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 30px;
+}
+
+.card-pilar {
+    background: rgba(255, 255, 255, 0.02);
+    padding: 50px 35px;
+    border-radius: 4px;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    transition: all 0.4s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+/* Efeito de brilho ao passar o mouse */
+.card-pilar:hover {
+    background: rgba(57, 255, 20, 0.03);
+    border-color: var(--neon);
+    transform: translateY(-10px);
+}
+
+.icone-container {
+    width: 60px;          /* Aumentei um pouco para dar mais presença */
+    height: 60px;
+    margin: 0 auto 25px;  /* O 'auto' nas laterais centraliza o bloco horizontalmente */
+    
+    /* CENTRALIZAÇÃO REAL DO SVG */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+    color: var(--neon);
+}
+
+.svg-neon {
+    filter: drop-shadow(0 0 8px rgba(57, 255, 20, 0.5));
+}
+
+.card-pilar {
+    text-align: center;   /* Garante que o H3 e o P também acompanhem o ícone no centro */
+    background: rgba(255, 255, 255, 0.02);
+    padding: 50px 35px;
+    border-radius: 4px;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    transition: all 0.4s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.card-pilar p {
+    font-size: 0.95rem;
+    line-height: 1.7;
+    opacity: 0.6;
+}
+
+/* Responsividade */
+@media (max-width: 950px) {
+    .grid-pilares { grid-template-columns: 1fr; }
+    .header-pilares h2 { font-size: 2rem; }
 }
