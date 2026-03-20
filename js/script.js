@@ -1,6 +1,6 @@
 /**
  * CLAUDIOSCHMIDT.dev - Vanilla Engine v1.0
- * Focado em Performance, UX Mobile e Simetria 3D
+ * Ajuste: Sincronização da classe 'aberto' para animação do X
  */
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -12,11 +12,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const header = document.querySelector('.cabecalho-fixo');
 
     // --- 2. LÓGICA DO MENU HAMBÚRGUER (MOBILE) ---
-    /**
-     * Alterna as classes para abrir/fechar o menu e 
-     * gerencia o scroll do body para evitar bugs visuais.
-     */
     const toggleMenu = () => {
+        // Esta classe 'aberto' no btnMenu é o que dispara o X no seu CSS
         const estaAberto = btnMenu.classList.toggle('aberto');
         listaMenu.classList.toggle('ativo');
         
@@ -27,7 +24,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Evento de clique no botão hambúrguer
     if (btnMenu) {
         btnMenu.addEventListener('click', (e) => {
-            e.stopPropagation(); // Evita que o clique feche o menu imediatamente
+            e.stopPropagation(); 
             toggleMenu();
         });
     }
@@ -44,21 +41,20 @@ document.addEventListener('DOMContentLoaded', () => {
     // Fecha o menu se o usuário clicar fora dele (UX Premium)
     document.addEventListener('click', (e) => {
         if (listaMenu.classList.contains('ativo') && !listaMenu.contains(e.target) && !btnMenu.contains(e.target)) {
-            toggleMenu();
+            // Chamamos toggleMenu para garantir que o X também desarme e o scroll volte
+            btnMenu.classList.remove('aberto');
+            listaMenu.classList.remove('ativo');
+            document.body.style.overflow = 'initial';
         }
     });
 
 
     // --- 3. EFEITO DO HEADER AO ROLAR ---
-    /**
-     * Adiciona sombra e aumenta a opacidade do menu fixo 
-     * assim que o usuário começa a descer a página.
-     */
     const handleHeaderScroll = () => {
         if (window.scrollY > 50) {
             header.style.background = "rgba(2, 5, 10, 0.96)";
             header.style.boxShadow = "0 10px 30px rgba(0,0,0,0.5)";
-            header.style.padding = "10px 0"; // Header fica mais "slim"
+            header.style.padding = "10px 0"; 
         } else {
             header.style.background = "rgba(2, 5, 10, 0.88)";
             header.style.boxShadow = "none";
@@ -70,10 +66,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
     // --- 4. REVELAÇÃO AO ROLAR (INTERSECTION OBSERVER) ---
-    /**
-     * Faz os elementos surgirem suavemente conforme entram na tela.
-     * threshold: 0.15 significa que dispara quando 15% do elemento está visível.
-     */
     const revealOptions = {
         threshold: 0.15,
         rootMargin: "0px 0px -50px 0px"
@@ -83,17 +75,15 @@ document.addEventListener('DOMContentLoaded', () => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
                 entry.target.classList.add('visivel');
-                // Para de observar o elemento após a revelação (ganho de performance)
                 revealObserver.unobserve(entry.target);
             }
         });
     }, revealOptions);
 
-    // Seleciona e observa todos os elementos com a classe .revelar
     document.querySelectorAll('.revelar').forEach(el => revealObserver.observe(el));
 
 
-    // --- 5. LOG DE STATUS (CONSOLE) ---
+    // --- 5. LOG DE STATUS ---
     console.log(
         "%c </> CLAUDIOSCHMIDT.dev %c Sistema Operacional - Joinville/SC ",
         "color: #02050a; background: #39ff14; font-weight: bold; padding: 5px; border-radius: 3px 0 0 3px;",
