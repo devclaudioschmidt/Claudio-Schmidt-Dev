@@ -8,6 +8,11 @@
     --transicao: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
+
+* {
+    outline: 1px solid red;
+}
+
 * {
     margin: 0;
     padding: 0;
@@ -34,6 +39,12 @@ body {
     max-width: 1200px;
     margin: 0 auto;
     padding: 0 25px;
+}
+
+/* Correção de overflow no mobile */
+.container-visual,
+.elemento-3d {
+    max-width: 100%;
 }
 
 /* --- 2. COMPONENTES REUTILIZÁVEIS (AUXILIARES) --- */
@@ -156,7 +167,7 @@ body {
     cursor: pointer;
     flex-direction: column;
     gap: 6px;
-    z-index: 1001;
+    z-index: 2000;
 }
 
 .barrinha {
@@ -165,6 +176,19 @@ body {
     background-color: var(--neon);
     border-radius: 2px;
     transition: 0.4s;
+}
+
+/* Animação do botão hamburguer para "X" */
+.menu-hamburguer.aberto .barrinha:nth-child(1) {
+    transform: rotate(45deg) translate(5px, 5px);
+}
+
+.menu-hamburguer.aberto .barrinha:nth-child(2) {
+    opacity: 0;
+}
+
+.menu-hamburguer.aberto .barrinha:nth-child(3) {
+    transform: rotate(-45deg) translate(6px, -6px);
 }
 
 /* --- 4. SEÇÃO INICIAL (HERO SECTION) --- */
@@ -658,6 +682,7 @@ details[open] summary::after {
     content: '-';
 }
 
+
 .faq-content {
     padding: 0 30px 25px 30px;
     color: rgba(255, 255, 255, 0.7);
@@ -896,6 +921,12 @@ details[open] summary::after {
         text-align: center;
     }
 
+    .texto-principal h1 {
+        font-size: 3rem;
+        line-height: 1.2;
+        padding: 0 10px;
+    }
+
     .texto-principal p {
         margin: 0 auto 50px auto;
     }
@@ -907,8 +938,10 @@ details[open] summary::after {
     }
 
     .elemento-3d {
-        width: 300px;
-        height: 300px;
+        width: 90%;
+        max-width: 300px;
+        height: auto;
+        aspect-ratio: 1 / 1;
     }
 
     .numero-100 {
@@ -947,4 +980,3 @@ details[open] summary::after {
     }
 
 }
-
