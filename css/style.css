@@ -882,3 +882,47 @@ details[open] summary::after { content: '-'; }
 }
 
 }
+
+/* --- RESPONSIVIDADE GLOBAL --- */
+@media (max-width: 950px) {
+    .container { width: 90%; margin: 0 auto; }
+}
+
+@media (max-width: 480px) {
+    html, body { overflow-x: hidden; }
+
+    .container {
+        width: 92%;
+        max-width: 92%;
+        margin: 0 auto;
+        padding: 0 !important;
+    }
+
+    /* Ajuste de Tipografia e Grid */
+    h1, .titulo-principal {
+        font-size: 1.8rem !important;
+        line-height: 1.2;
+        text-align: center;
+        word-wrap: break-word;
+    }
+
+    .grade-sobre, .grade-contato, .hero-content {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        gap: 30px;
+    }
+
+    .moldura-neon {
+        justify-self: center;
+        margin: 0 auto;
+    }
+
+    .btn-enviar-projeto, .btn-quero-meu-site-rapido {
+        width: 100%;
+        max-width: 280px;
+        margin: 10px auto;
+        display: block;
+    }
+}
