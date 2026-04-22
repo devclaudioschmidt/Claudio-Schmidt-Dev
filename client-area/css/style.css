@@ -507,13 +507,110 @@ a:hover { text-shadow: 0 0 10px var(--neon); }
 
 .toggle-modo button.ativo { border-color: var(--neon); color: var(--neon); background: rgba(57, 255, 20, 0.1); }
 
+/* Botões mobile (escondido desktop) */
+.menu-toggle { display: none; transition: left 0.4s cubic-bezier(0.77, 0.2, 0.05, 1); }
+.overlay-menu { display: none; }
+
 /* ====== RESPONSIVIDADE ====== */
 @media (max-width: 900px) {
-  .sidebar { width: 100%; height: auto; position: relative; border-right: none; border-bottom: 1px solid var(--borda); }
+  .sidebar { 
+    width: 260px; 
+    height: 100vh;
+    position: fixed;
+    left: -280px;
+    top: 0;
+    transition: left 0.4s cubic-bezier(0.77, 0.2, 0.05, 1);
+    z-index: 2000;
+    border-right: none;
+    border-bottom: none;
+  }
+  
+.sidebar.ativo { left: 0; }
+  
+  .sidebar.ativo ~ .menu-toggle {
+    left: 260px;
+  }
+  
+  .sidebar.ativo + .menu-toggle {
+    left: 260px;
+  }
+  
+  .menu-toggle.aberto {
+    left: 260px;
+  }
+  
   .main-area { margin-left: 0; }
+  
   .tarefas-grid { grid-template-columns: 1fr; padding: 0 20px 40px; }
-  .header-area { padding: 20px; flex-direction: column; gap: 15px; align-items: flex-start; }
+  .clientes-grid { grid-template-columns: 1fr; padding: 0 20px 40px; }
+  .header-area { padding: 20px 20px 20px 80px; flex-direction: row; justify-content: space-between; align-items: center; gap: 10px; }
+  .header-title { text-align: right; flex: 1; }
+  .header-title h1 { font-size: 1.1rem; }
+  .header-title p { font-size: 0.7rem; }
+  .header-actions { flex-shrink: 0; }
+  .header-actions .btn { padding: 8px 14px; font-size: 0.75rem; }
   .filtros { padding: 20px; }
+  .busca-clientes { padding: 20px; }
+  
+  /* Botão Toggle Menu */
+  .menu-toggle {
+    display: flex;
+    position: fixed;
+    top: 15px;
+    left: 15px;
+    z-index: 2001;
+    width: 45px;
+    height: 45px;
+    background: rgba(2, 5, 10, 0.95);
+    border: 1px solid var(--neon);
+    border-radius: 8px;
+    cursor: pointer;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+    transition: left 0.4s cubic-bezier(0.77, 0.2, 0.05, 1);
+  }
+  
+  .menu-toggle span {
+    width: 22px;
+    height: 2px;
+    background: var(--neon);
+    border-radius: 2px;
+    transition: 0.3s;
+  }
+  
+  .menu-toggle.aberto span:nth-child(1) {
+    transform: rotate(45deg) translate(5px, 5px);
+  }
+  
+  .menu-toggle.aberto span:nth-child(2) {
+    opacity: 0;
+  }
+  
+  .menu-toggle.aberto span:nth-child(3) {
+    transform: rotate(-45deg) translate(5px, -5px);
+  }
+  
+  /* Overlay quando menu aberto */
+  .overlay-menu {
+    display: block;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    z-index: 1999;
+    opacity: 0;
+    visibility: hidden;
+    transition: 0.3s;
+  }
+  
+  .overlay-menu.ativo {
+    opacity: 1;
+    visibility: visible;
+  }
 }
 
 @media (max-width: 500px) {

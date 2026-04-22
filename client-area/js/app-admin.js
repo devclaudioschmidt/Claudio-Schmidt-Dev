@@ -19,7 +19,6 @@ document.addEventListener('DOMContentLoaded', function() {
     appState.usuario = JSON.parse(usuarioSalvo);
     appState.usuario.modo = 'admin';
   } else {
-    // Não está logado, usa padrão admin
     appState.usuario = { nome: 'Admin', email: 'admin@claudio.dev', avatar: 'AD' };
   }
   
@@ -27,6 +26,17 @@ document.addEventListener('DOMContentLoaded', function() {
   renderizarFiltros();
   renderizarTarefas();
 });
+
+// ========== TOGGLE MENU MOBILE ==========
+window.toggleMenu = function() {
+  const sidebar = document.querySelector('.sidebar');
+  const overlay = document.getElementById('overlay-menu');
+  const toggle = document.getElementById('menu-toggle');
+  
+  sidebar.classList.toggle('ativo');
+  overlay?.classList.toggle('ativo');
+  toggle?.classList.toggle('aberto');
+};
 
 function renderizarSidebar() {
   document.getElementById('user-nome').textContent = appState.usuario?.nome || 'Admin';

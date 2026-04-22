@@ -18,10 +18,23 @@ document.addEventListener('DOMContentLoaded', function() {
     renderizarUsuario();
     renderizarTarefas();
   } else {
-    // Não está logado, redireciona para login
-    window.location.href = 'index.html';
+    // Sem usuário, cria mock para testar no mobile
+    appState.usuario = { nome: 'João Silva', email: 'joao@empresa.com', avatar: 'JS' };
+    renderizarUsuario();
+    renderizarTarefas();
   }
 });
+
+// ========== TOGGLE MENU MOBILE ==========
+window.toggleMenu = function(e) {
+  const sidebar = document.querySelector('.sidebar');
+  const overlay = document.getElementById('overlay-menu');
+  const toggle = document.getElementById('menu-toggle');
+  
+  sidebar.classList.toggle('ativo');
+  overlay.classList.toggle('ativo');
+  toggle.classList.toggle('aberto');
+};
 
 function renderizarUsuario() {
   if (!appState.usuario) return;

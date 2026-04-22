@@ -10,6 +10,9 @@
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
+    <!-- Overlay (fecha menu ao clicar fora) -->
+    <div class="overlay-menu" id="overlay-menu" onclick="toggleMenu()"></div>
+    
     <div class="app-container">
         <!-- SIDEBAR -->
         <aside class="sidebar">
@@ -48,6 +51,13 @@
                 <span>Sistema Online</span>
             </div>
         </aside>
+        
+        <!-- Botão Toggle Menu -->
+        <button class="menu-toggle" id="menu-toggle" onclick="toggleMenu()">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
         
         <!-- ÁREA PRINCIPAL -->
         <main class="main-area">
