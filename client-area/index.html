@@ -29,9 +29,11 @@
                     <input type="password" id="senha" placeholder="••••••••" required>
                 </div>
                 
-                <button type="submit" class="btn btn-primary">
+                <button type="submit" class="btn btn-primary" id="btn-entrar">
                     ENTRAR <span>→</span>
                 </button>
+                
+                <p id="erro-login" style="color: #ef4444; text-align: center; margin-top: 10px; display: none;"></p>
             </form>
             
             <div class="opcoes-login">
@@ -44,7 +46,70 @@
         </div>
     </div>
 
-    <script src="js/mock-data.js"></script>
-    <script src="js/app-login.js"></script>
+    <!-- Versão simples apenas auth -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.0/firebase-app.js";
+        import { getAuth, signInWithEmailAndPassword, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.0.0/firebase-auth.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyDYvLbBw02MbTcCL-CZekBmb5Nv0Cyk5ic",
+            authDomain: "cliente-area-crm.firebaseapp.com",
+            projectId: "cliente-area-crm",
+            storageBucket: "cliente-area-crm.firebasestorage.app",
+            messagingSenderId: "584425836546",
+            appId: "1:584425836546:web:06ce1d814a750f66a5d71b"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+
+        document.getElementById('form-login').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const email = document.getElementById('email').value;
+            const senha = document.getElementById('senha').value;
+            const btn = document.getElementById('btn-entrar');
+            const erro = document.getElementById('erro-login');
+            
+            btn.disabled = true;
+            btn.textContent = 'Entrando...';
+            erro.style.display = 'none';
+            
+            try {
+                const userCredential = await signInWithEmailAndPassword(auth, email, senha);
+                const user = userCredential.user;
+                
+                // Verificar role pelo email
+                let role = 'cliente';
+                if (email.toLowerCase().includes('claudio') || email.toLowerCase().includes('admin')) {
+                    role = 'admin';
+                }
+                
+                // Salvar no sessionStorage
+                const nome = email.split('@')[0].replace('.', ' ');
+                sessionStorage.setItem('usuarioLogado', JSON.stringify({
+                    uid: user.uid,
+                    email: user.email,
+                    nome: nome,
+                    role: role,
+                    avatar: nome.split(' ').map(n => n[0]).join('').substring(0,2).toUpperCase()
+                }));
+                
+                // Redirecionar
+                if (role === 'admin') {
+                    window.location.href = 'admin.html';
+                } else {
+                    window.location.href = 'cliente.html';
+                }
+                
+            } catch (error) {
+                console.error('Erro:', error.code, error.message);
+                erro.textContent = 'E-mail ou senha incorretos';
+                erro.style.display = 'block';
+                btn.disabled = false;
+                btn.textContent = 'ENTRAR →';
+            }
+        });
+    </script>
 </body>
 </html>
