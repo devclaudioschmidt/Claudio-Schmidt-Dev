@@ -78,8 +78,13 @@
             
             <!-- SEÇÃO CLIENTES -->
             <div class="secao-content" id="secao-clientes" style="display: none;">
-                <div class="busca-clientes">
-                    <input type="text" id="busca-cliente" placeholder="Buscar cliente por nome ou email..." oninput="renderizarClientes()">
+                <div class="header-clientes">
+                    <div class="busca-clientes">
+                        <input type="text" id="busca-cliente" placeholder="Buscar cliente por nome ou email..." oninput="renderizarClientes()">
+                    </div>
+                    <button class="btn btn-primary" onclick="abrirModalNovoCliente()">
+                        <span>+</span> Novo Cliente
+                    </button>
                 </div>
                 <div class="clientes-grid" id="clientes-container"></div>
             </div>
@@ -126,8 +131,37 @@
             </div>
         </div>
     </div>
+    
+    <!-- MODAL NOVO CLIENTE -->
+    <div class="modal-overlay" id="modal-novo-cliente">
+        <div class="modal">
+            <div class="modal-header">
+                <h2>Novo Cliente</h2>
+                <button class="btn-fechar" onclick="fecharModalNovoCliente()">×</button>
+            </div>
+            <div class="modal-body">
+                <form id="form-novo-cliente">
+                    <div class="form-group">
+                        <label>Nome do Cliente</label>
+                        <input type="text" id="novo-cliente-nome" placeholder="Nome completo" required>
+                    </div>
+                    <div class="form-group">
+                        <label>E-mail</label>
+                        <input type="email" id="novo-cliente-email" placeholder="email@empresa.com" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Senha Temporária</label>
+                        <input type="text" id="novo-cliente-senha" placeholder="Senha inicial (cliente pode alterar)" required>
+                    </div>
+                    <div class="modal-footer" style="padding: 0; border: none; margin-top: 20px;">
+                        <button type="button" class="btn btn-outline" onclick="fecharModalNovoCliente()">CANCELAR</button>
+                        <button type="submit" class="btn btn-primary" id="btn-cadastrar-cliente">CADASTRAR</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
 
-    <script src="js/mock-data.js"></script>
-    <script src="js/app-admin.js"></script>
+    <script src="js/app-admin.js" type="module"></script>
 </body>
 </html>

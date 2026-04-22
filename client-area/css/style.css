@@ -645,6 +645,24 @@ a:hover { text-shadow: 0 0 10px var(--neon); }
 
 /* ====== BUSCA CLIENTES ====== */
 .busca-clientes { padding: 20px 40px; }
+
+.header-clientes {
+  padding: 20px 40px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.header-clientes .busca-clientes {
+  padding: 0;
+  flex: 1;
+}
+
+.header-clientes .busca-clientes input {
+  width: 100%;
+}
 .busca-clientes input {
   width: 100%;
   padding: 14px 20px;

@@ -46,10 +46,11 @@
         </div>
     </div>
 
-    <!-- Versão simples apenas auth -->
+    <!-- Firebase SDK -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.0/firebase-app.js";
-        import { getAuth, signInWithEmailAndPassword, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.0.0/firebase-auth.js";
+        import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/11.0.0/firebase-auth.js";
+        import { getFirestore, doc, getDoc, setDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/11.0.0/firebase-firestore.js";
 
         const firebaseConfig = {
             apiKey: "AIzaSyDYvLbBw02MbTcCL-CZekBmb5Nv0Cyk5ic",
@@ -62,6 +63,7 @@
 
         const app = initializeApp(firebaseConfig);
         const auth = getAuth(app);
+        const db = getFirestore(app);
 
         document.getElementById('form-login').addEventListener('submit', async (e) => {
             e.preventDefault();
@@ -76,27 +78,47 @@
             erro.style.display = 'none';
             
             try {
+                // 1. Login no Firebase Auth
                 const userCredential = await signInWithEmailAndPassword(auth, email, senha);
                 const user = userCredential.user;
                 
-                // Verificar role pelo email
-                let role = 'cliente';
-                if (email.toLowerCase().includes('claudio') || email.toLowerCase().includes('admin')) {
-                    role = 'admin';
+                // 2. Verificar/Criar usuário no Firestore
+                const userDocRef = doc(db, "users", user.uid);
+                const userDoc = await getDoc(userDocRef);
+                
+                let userData = { role: 'cliente' };
+                
+                // Se não existe, criar documento
+                if (!userDoc.exists()) {
+                    const isAdmin = email.toLowerCase().includes('claudio') || email.toLowerCase().includes('admin');
+                    
+                    await setDoc(userDocRef, {
+                        nome: email.split('@')[0].replace('.', ' '),
+                        email: user.email,
+                        role: isAdmin ? 'admin' : 'cliente',
+                        status: 'ativo',
+                        createdAt: serverTimestamp(),
+                        updatedAt: serverTimestamp()
+                    });
+                    
+                    userData.role = isAdmin ? 'admin' : 'cliente';
+                    console.log('Usuário criado com role:', userData.role);
+                } else {
+                    userData = userDoc.data();
                 }
                 
-                // Salvar no sessionStorage
-                const nome = email.split('@')[0].replace('.', ' ');
+                // 3. Salvar no sessionStorage
+                const nome = userData.nome || email.split('@')[0];
                 sessionStorage.setItem('usuarioLogado', JSON.stringify({
                     uid: user.uid,
                     email: user.email,
                     nome: nome,
-                    role: role,
+                    role: userData.role,
                     avatar: nome.split(' ').map(n => n[0]).join('').substring(0,2).toUpperCase()
                 }));
                 
-                // Redirecionar
-                if (role === 'admin') {
+                // 4. Redirecionar
+                if (userData.role === 'admin') {
                     window.location.href = 'admin.html';
                 } else {
                     window.location.href = 'cliente.html';
