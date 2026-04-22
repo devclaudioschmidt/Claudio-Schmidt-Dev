@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login | Área do Cliente</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="login-page">
+        <div class="login-container">
+            <div class="login-logo">
+                <div class="avatar" style="width: 60px; height: 60px; margin: 0 auto;">CS</div>
+                <h1>&lt;/&gt; CLIENTE<span>AREA</span></h1>
+                <p class="subtitle">Gestão de Demandas em Tempo Real</p>
+            </div>
+            
+            <form class="login-form" id="form-login">
+                <div class="form-group">
+                    <label>E-mail</label>
+                    <input type="email" id="email" placeholder="seu@email.com" required>
+                </div>
+                
+                <div class="form-group">
+                    <label>Senha</label>
+                    <input type="password" id="senha" placeholder="••••••••" required>
+                </div>
+                
+                <button type="submit" class="btn btn-primary">
+                    ENTRAR <span>→</span>
+                </button>
+            </form>
+            
+            <div class="opcoes-login">
+                <p>Escolha seu painel:</p>
+                <div class="botoes-login">
+                    <a href="cliente.html" class="btn btn-outline">ÁREA DO CLIENTE</a>
+                    <a href="admin.html" class="btn btn-primary">PAINEL ADMIN</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/mock-data.js"></script>
+    <script src="js/app-login.js"></script>
+</body>
+</html>

@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Painel Admin | Área do Cliente</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- SIDEBAR -->
+        <aside class="sidebar">
+            <div class="logo-area">
+                <div class="logo">
+                    <span>&lt;/&gt;</span> CLIENTE<span>AREA</span>
+                </div>
+                <span class="tag">ADMIN</span>
+            </div>
+            
+            <div class="user-profile">
+                <div class="avatar" id="user-avatar">AD</div>
+                <div class="user-info">
+                    <div class="nome" id="user-nome">Administrador</div>
+                    <div class="email" id="user-email">admin@empresa.com</div>
+                </div>
+            </div>
+            
+            <nav class="nav-menu">
+                <div class="nav-item" id="nav-demandas-btn" onclick="mostrarSecao('demandas')">
+                    <span class="icone">📋</span>
+                    <span id="nav-demandas">Todas as Demandas</span>
+                </div>
+                <div class="nav-item" id="nav-clientes-btn" onclick="mostrarSecao('clientes')">
+                    <span class="icone">👥</span>
+                    <span>Clientes</span>
+                </div>
+                <div class="nav-item" onclick="logout()">
+                    <span class="icone">🚪</span>
+                    <span>Sair</span>
+                </div>
+            </nav>
+            
+            <div class="status-sistema">
+                <span class="ponto"></span>
+                <span>Sistema Online</span>
+            </div>
+        </aside>
+        
+        <!-- ÁREA PRINCIPAL -->
+        <main class="main-area">
+            <header class="header-area">
+                <div class="header-title">
+                    <h1 id="page-title">Dashboard Admin</h1>
+                    <p id="page-subtitle">Gestão completa de clientes</p>
+                </div>
+            </header>
+            
+            <!-- FILTROS -->
+            <div class="filtros" id="filtros-container"></div>
+            
+            <!-- SEÇÃO DEMANDAS -->
+            <div class="secao-content" id="secao-demandas">
+                <div class="tarefas-grid" id="tarefas-container"></div>
+            </div>
+            
+            <!-- SEÇÃO CLIENTES -->
+            <div class="secao-content" id="secao-clientes" style="display: none;">
+                <div class="busca-clientes">
+                    <input type="text" id="busca-cliente" placeholder="Buscar cliente por nome ou email..." oninput="renderizarClientes()">
+                </div>
+                <div class="clientes-grid" id="clientes-container"></div>
+            </div>
+        </main>
+    </div>
+    
+    <!-- MODAL DE TAREFA -->
+    <div class="modal-overlay" id="modal-tarefa">
+        <div class="modal">
+            <div class="modal-header">
+                <h2 id="modal-titulo">Título da Tarefa</h2>
+                <button class="btn-fechar" onclick="fecharModal()">×</button>
+            </div>
+            
+            <div class="modal-body">
+                <div id="info-tarefa">
+                    <div class="form-group">
+                        <span class="card-id" id="modal-id"></span>
+                        <span style="margin-left: 15px; opacity: 0.5;" id="modal-data"></span>
+                    </div>
+                    <div class="form-group" style="margin-top: 15px;">
+                        <label>Descrição</label>
+                        <p id="modal-descricao" style="line-height: 1.7; opacity: 0.8;"></p>
+                    </div>
+                    <div class="form-group" id="modal-status-area">
+                        <label>Status</label>
+                        <select id="select-status" class="select-status pendente" onchange="alterarStatus(this.value)">
+                            <option value="pendente">Pendente</option>
+                            <option value="fazendo">Fazendo</option>
+                            <option value="revisao">Revisão</option>
+                            <option value="concluido">Concluído</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div id="chat-section">
+                    <label style="display: block; font-size: 0.8rem; font-weight: 700; margin-bottom: 15px; color: var(--texto-fraco); text-transform: uppercase; letter-spacing: 1px;">Mensagens</label>
+                    <div class="chat-mensagens" id="chat-mensagens"></div>
+                    <div class="chat-input">
+                        <input type="text" id="mensagem-input" placeholder="Digite sua mensagem...">
+                        <button class="btn btn-primary" onclick="enviarMensagem()">ENVIAR</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/mock-data.js"></script>
+    <script src="js/app-admin.js"></script>
+</body>
+</html>

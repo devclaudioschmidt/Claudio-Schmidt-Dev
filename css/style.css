@@ -87,8 +87,30 @@ body {
 }
 
 .botao-neon.pequeno {
-    padding: 8px 18px;
-    font-size: 0.7rem;
+    padding: 8px 14px;
+    font-size: 0.65rem;
+    white-space: nowrap;
+}
+
+.botao-cliente {
+    display: inline-block;
+    padding: 8px 14px;
+    background: var(--neon);
+    color: var(--fundo-dark) !important;
+    text-decoration: none;
+    font-weight: 900;
+    border-radius: 4px;
+    font-size: 0.65rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    transition: var(--transicao);
+    white-space: nowrap;
+}
+
+.botao-cliente:hover {
+    background: #4efd1d;
+    box-shadow: 0 0 25px rgba(57, 255, 20, 0.5);
+    transform: translateY(-3px);
 }
 
 .botao-neon:hover {
