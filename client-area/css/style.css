@@ -88,9 +88,20 @@ a:hover { text-shadow: 0 0 10px var(--neon); }
   padding: 25px;
   border-bottom: 1px solid var(--borda);
   display: flex;
+  flex-direction: column;
   align-items: center;
-  gap: 15px;
 }
+
+.user-profile .profile-header { margin-bottom: 12px; }
+.user-profile .profile-header .avatar {
+  width: 65px;
+  height: 65px;
+  font-size: 1.4rem;
+}
+
+.user-profile .user-info { text-align: center; width: 100%; }
+.user-profile .user-info .nome { font-weight: 700; font-size: 1rem; margin-bottom: 4px; }
+.user-profile .user-info .email { font-size: 0.75rem; color: var(--texto-fraco); margin-bottom: 12px; }
 
 .avatar {
   width: 45px;
@@ -105,8 +116,31 @@ a:hover { text-shadow: 0 0 10px var(--neon); }
   font-size: 1rem;
 }
 
-.user-info .nome { font-weight: 700; font-size: 0.9rem; margin-bottom: 2px; }
-.user-info .email { font-size: 0.75rem; color: var(--texto-fraco); }
+.divisoria {
+  height: 1px;
+  background: var(--borda);
+  margin: 8px 10px 12px;
+}
+
+.cliente-dados { display: flex; flex-direction: column; gap: 6px; }
+.cliente-dados .cliente-link {
+  font-size: 0.7rem;
+  padding: 6px 10px;
+  border-radius: 6px;
+  background: var(--fundo-card);
+  border: 1px solid var(--borda);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  transition: var(--transicao);
+}
+
+.cliente-dados .cliente-link:hover {
+  background: var(--fundo-hover);
+  border-color: var(--neon-fraco);
+  text-shadow: 0 0 8px var(--neon);
+}
 
 .nav-menu {
   padding: 20px 15px;
@@ -266,7 +300,6 @@ a:hover { text-shadow: 0 0 10px var(--neon); }
   cursor: pointer;
   transition: var(--transicao);
   position: relative;
-  overflow: hidden;
 }
 
 .card-tarefa:hover { border-color: var(--neon-fraco); transform: translateY(-4px); box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3); }
@@ -276,7 +309,7 @@ a:hover { text-shadow: 0 0 10px var(--neon); }
 .card-tarefa.revisao::before { background: var(--revisao); }
 .card-tarefa.concluido::before { background: var(--concluido); }
 
-.card-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 15px; }
+.card-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 15px; position: relative; }
 
 .badge-status {
   font-size: 0.7rem;
@@ -385,6 +418,12 @@ a:hover { text-shadow: 0 0 10px var(--neon); }
 /* ====== CHAT ====== */
 .chat-mensagens { min-height: 200px; max-height: 300px; overflow-y: auto; padding: 20px 0; }
 
+.msg { margin-bottom: 12px; padding: 10px 14px; border-radius: 12px; font-size: 0.85rem; max-width: 85%; }
+.msg-cliente { background: rgba(57, 255, 20, 0.1); border: 1px solid rgba(57, 255, 20, 0.2); margin-right: auto; border-bottom-left-radius: 4px; }
+.msg-admin { background: var(--fundo-card); border: 1px solid var(--borda); margin-left: auto; border-bottom-right-radius: 4px; text-align: right; }
+.msg-texto { margin-bottom: 4px; line-height: 1.4; }
+.msg-info { font-size: 0.65rem; opacity: 0.5; }
+
 .mensagem { margin-bottom: 15px; display: flex; flex-direction: column; }
 .mensagem.sistema { align-items: flex-start; }
 .mensagem.usuario { align-items: flex-end; }
@@ -452,10 +491,27 @@ a:hover { text-shadow: 0 0 10px var(--neon); }
 .select-status.concluido { border-color: var(--concluido); color: var(--concluido); }
 
 /* ====== EMPTY STATE ====== */
-.empty-state { text-align: center; padding: 60px 40px; }
-.empty-state .icon { font-size: 4rem; margin-bottom: 20px; opacity: 0.3; }
-.empty-state h3 { font-size: 1.3rem; margin-bottom: 10px; }
-.empty-state p { color: var(--texto-fraco); max-width: 400px; margin: 0 auto; }
+.empty-state { 
+  text-align: center; 
+  padding: 60px 20px; 
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 300px;
+}
+.empty-state .icon { font-size: 4rem; margin-bottom: 20px; opacity: 0.3; text-align: center; width: 100%; }
+.empty-state h3 { font-size: 1.3rem; margin-bottom: 10px; text-align: center; }
+.empty-state p { color: var(--texto-fraco); max-width: 400px; margin: 0 auto; text-align: center; }
+
+/* Garantir que grids центриzem empty state */
+.tarefas-grid .empty-state,
+.clientes-grid .empty-state {
+  grid-column: 1 / -1;
+  justify-self: center;
+  align-self: center;
+}
 
 /* ====== LOGIN ====== */
 .login-page {
@@ -723,6 +779,55 @@ a:hover { text-shadow: 0 0 10px var(--neon); }
 .cliente-info h3 { font-size: 1rem; margin-bottom: 2px; }
 .cliente-info p { font-size: 0.8rem; color: var(--texto-fraco); }
 
+.cliente-contatos {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 8px;
+}
+
+.cliente-link {
+    font-size: 0.75rem;
+    padding: 4px 8px;
+    border-radius: 4px;
+    background: var(--fundo-card);
+    border: 1px solid var(--borda);
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.cliente-link:hover {
+    background: var(--fundo-hover);
+    border-color: var(--neon-fraco);
+}
+
+.cliente-link-empty {
+    font-size: 0.7rem;
+    color: var(--texto-fraco);
+    padding: 4px 8px;
+    opacity: 0.5;
+}
+
+.btn-editar {
+    margin-top: 12px;
+    padding: 8px 12px;
+    font-size: 0.75rem;
+    background: transparent;
+    border: 1px solid var(--borda);
+    color: var(--texto-fraco);
+    border-radius: 6px;
+    cursor: pointer;
+    transition: var(--transicao);
+    width: 100%;
+}
+
+.btn-editar:hover {
+    background: var(--fundo-hover);
+    border-color: var(--neon-fraco);
+    color: var(--neon);
+}
+
 .cliente-header .badge-status.ativo { background: rgba(34, 197, 94, 0.15); color: var(--concluido); }
 .cliente-header .badge-status.inativo { background: rgba(107, 114, 128, 0.15); color: var(--pendente); }
 
@@ -745,3 +850,90 @@ a:hover { text-shadow: 0 0 10px var(--neon); }
 
 .cliente-stats .stat { color: var(--texto-fraco); }
 .cliente-stats .stat.ativo { color: var(--neon); font-weight: 600; }
+
+.acao-cliente { margin-top: 20px; padding: 20px; background: var(--fundo-card); border-radius: 12px; border: 1px solid var(--borda); text-align: center; }
+.acao-texto { font-size: 0.9rem; margin-bottom: 15px; color: var(--texto-fraco); }
+.acao-botoes { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+.acao-botoes .btn { min-width: 140px; }
+
+.unread-badge {
+    position: absolute;
+    top: -10px;
+    right: -10px;
+    min-width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background: #ef4444;
+    color: white;
+    font-size: 0.75rem;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 6px;
+    box-shadow: 0 0 0 3px var(--fundo), 0 2px 8px rgba(239, 68, 68, 0.5);
+    animation: pulse-badge 2s infinite;
+    z-index: 100;
+}
+
+@keyframes pulse-badge {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+}
+
+.toast-notificacao {
+    position: fixed;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%) translateY(100px);
+    background: linear-gradient(135deg, var(--neon), #00ff88);
+    color: var(--fundo);
+    padding: 14px 28px;
+    border-radius: 30px;
+    font-weight: 700;
+    font-size: 0.9rem;
+    box-shadow: 0 8px 30px rgba(57, 255, 20, 0.4);
+    transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    z-index: 9999;
+}
+
+.toast-notificacao.ativo {
+    transform: translateX(-50%) translateY(0);
+}
+
+.btn-success { background: var(--concluido) !important; color: var(--fundo) !important; border: none !important; }
+.btn-success:hover { filter: brightness(1.1); box-shadow: 0 0 20px var(--concluido); }
+
+.btn-warning { background: var(--revisao) !important; color: var(--fundo) !important; border: none !important; }
+.btn-warning:hover { filter: brightness(1.1); box-shadow: 0 0 20px var(--revisao); }
+
+.ultima-msg {
+    margin: 10px 0;
+    padding: 10px 12px;
+    border-radius: 8px;
+    font-size: 0.8rem;
+    border-left: 3px solid;
+}
+
+.ultima-msg-cliente {
+    background: rgba(57, 255, 20, 0.08);
+    border-color: var(--neon);
+}
+
+.ultima-msg-admin {
+    background: rgba(59, 130, 246, 0.1);
+    border-color: var(--fazendo);
+}
+
+.ultima-msg-texto {
+    display: block;
+    color: var(--texto);
+    font-style: italic;
+    margin-bottom: 4px;
+    line-height: 1.4;
+}
+
+.ultima-msg-info {
+    font-size: 0.65rem;
+    opacity: 0.6;
+}

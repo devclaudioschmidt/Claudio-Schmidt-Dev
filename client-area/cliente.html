@@ -10,11 +10,7 @@
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-    <!-- Overlay (fecha menu ao clicar fora) -->
-    <div class="overlay-menu" id="overlay-menu" onclick="toggleMenu()"></div>
-    
     <div class="app-container">
-        <!-- SIDEBAR -->
         <aside class="sidebar">
             <div class="logo-area">
                 <div class="logo">
@@ -22,17 +18,19 @@
                 </div>
                 <span class="tag">CLIENTE</span>
             </div>
-            
             <div class="user-profile">
-                <div class="avatar" id="user-avatar">JS</div>
+                <div class="profile-header">
+                    <div class="avatar" id="user-avatar">JS</div>
+                </div>
                 <div class="user-info">
                     <div class="nome" id="user-nome">João Silva</div>
                     <div class="email" id="user-email">joao@empresa.com</div>
+                    <div class="divisoria"></div>
+                    <div class="cliente-dados" id="cliente-dados"></div>
                 </div>
             </div>
-            
             <nav class="nav-menu">
-                <div class="nav-item" id="nav-demandas-btn" onclick="mostrarSecao('demandas')">
+                <div class="nav-item ativo" onclick="mostrarSecao('demandas')">
                     <span class="icone">📋</span>
                     <span>Minhas Demandas</span>
                 </div>
@@ -41,99 +39,347 @@
                     <span>Sair</span>
                 </div>
             </nav>
-            
             <div class="status-sistema">
                 <span class="ponto"></span>
                 <span>Sistema Online</span>
             </div>
         </aside>
         
-        <!-- Botão Toggle Menu -->
         <button class="menu-toggle" id="menu-toggle" onclick="toggleMenu()">
             <span></span>
             <span></span>
             <span></span>
         </button>
         
-        <!-- ÁREA PRINCIPAL -->
         <main class="main-area">
             <header class="header-area">
                 <div class="header-title">
                     <h1 id="page-title">Minhas Demandas</h1>
-                    <p id="page-subtitle">Acompanhe suas demandas em tempo real</p>
+                    <p id="page-subtitle">Acompanhe suas demandas</p>
                 </div>
                 <div class="header-actions">
-                    <button class="btn btn-primary" id="btn-nova-demanda" onclick="abrirModalNovaDemanda()">
+                    <button class="btn btn-primary" onclick="abrirModalNovaDemanda()">
                         <span>+</span> Nova Demanda
                     </button>
                 </div>
             </header>
-            
-            <!-- SEÇÃO DEMANDAS -->
-            <div class="secao-content" id="secao-demandas">
-                <div class="tarefas-grid" id="tarefas-container"></div>
-            </div>
+            <div class="tarefas-grid" id="tarefas-container"></div>
         </main>
     </div>
     
-    <!-- MODAL DE TAREFA -->
     <div class="modal-overlay" id="modal-tarefa">
         <div class="modal">
             <div class="modal-header">
-                <h2 id="modal-titulo">Título da Tarefa</h2>
+                <h2 id="modal-titulo">Título</h2>
                 <button class="btn-fechar" onclick="fecharModal()">×</button>
             </div>
-            
             <div class="modal-body">
                 <div id="info-tarefa">
-                    <div class="form-group">
-                        <span class="card-id" id="modal-id"></span>
-                        <span style="margin-left: 15px; opacity: 0.5;" id="modal-data"></span>
-                    </div>
-                    <div class="form-group" style="margin-top: 15px;">
-                        <label>Descrição</label>
-                        <p id="modal-descricao" style="line-height: 1.7; opacity: 0.8;"></p>
-                    </div>
+                    <span class="card-id" id="modal-id"></span>
+                    <span style="margin-left:15px;opacity:0.5" id="modal-data"></span>
+                    <p id="modal-descricao" style="margin-top:15px;"></p>
                 </div>
-                
                 <div id="chat-section">
-                    <label style="display: block; font-size: 0.8rem; font-weight: 700; margin-bottom: 15px; color: var(--texto-fraco); text-transform: uppercase; letter-spacing: 1px;">Mensagens</label>
+                    <label>Mensagens</label>
                     <div class="chat-mensagens" id="chat-mensagens"></div>
                     <div class="chat-input">
-                        <input type="text" id="mensagem-input" placeholder="Digite sua mensagem...">
+                        <input type="text" id="mensagem-input" placeholder="Mensagem...">
                         <button class="btn btn-primary" onclick="enviarMensagem()">ENVIAR</button>
+                    </div>
+                </div>
+                <div class="acao-cliente" id="acao-cliente" style="display: none;">
+                    <p class="acao-texto">O serviço está em revisão. O que deseja fazer?</p>
+                    <div class="acao-botoes">
+                        <button class="btn btn-success" onclick="aprovarDemanda()">✅ Aprovar</button>
+                        <button class="btn btn-warning" onclick="pedirRevisao()">🔄 Pedir Revisão</button>
                     </div>
                 </div>
             </div>
         </div>
     </div>
     
-    <!-- MODAL NOVA DEMANDA -->
     <div class="modal-overlay" id="modal-nova-demanda">
         <div class="modal">
             <div class="modal-header">
                 <h2>Nova Demanda</h2>
-                <button class="btn-fechar" onclick="fecharModal()">×</button>
+                <button class="btn-fechar" onclick="fecharModalNovaDemanda()">×</button>
             </div>
             <div class="modal-body">
                 <form id="form-nova-demanda">
                     <div class="form-group">
-                        <label>Título da Demanda</label>
-                        <input type="text" id="nova-titulo" placeholder="Ex: Criar site institucional" required>
+                        <label>Título</label>
+                        <input type="text" id="nova-titulo" required>
                     </div>
                     <div class="form-group">
                         <label>Descrição</label>
-                        <textarea id="nova-descricao" placeholder="Descreva detalhadamente o que precisa..." required></textarea>
+                        <textarea id="nova-descricao" required></textarea>
                     </div>
-                    <div class="modal-footer" style="padding: 0; border: none; margin-top: 20px;">
-                        <button type="button" class="btn btn-outline" onclick="fecharModal()">CANCELAR</button>
-                        <button type="submit" class="btn btn-primary">CRIAR DEMANDA</button>
-                    </div>
+                    <button type="submit" class="btn btn-primary">CRIAR DEMANDA</button>
                 </form>
             </div>
         </div>
     </div>
 
-    <script src="js/app-cliente.js" type="module"></script>
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.0/firebase-app.js";
+        import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/11.0.0/firebase-auth.js";
+        import { getFirestore, collection, onSnapshot, addDoc, updateDoc, doc, getDoc, query, where, serverTimestamp } from "https://www.gstatic.com/firebasejs/11.0.0/firebase-firestore.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyDYvLbBw02MbTcCL-CZekBmb5Nv0Cyk5ic",
+            authDomain: "cliente-area-crm.firebaseapp.com",
+            projectId: "cliente-area-crm",
+            storageBucket: "cliente-area-crm.firebasestorage.app",
+            messagingSenderId: "584425836546",
+            appId: "1:584425836546:web:06ce1d814a750f66a5d71b"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
+
+        let appState = { usuario: null, tarefas: [], unreadMap: {} };
+        let tarefaAtual = null;
+        let tarefaUnsubscribe = null;
+        let toastTimeout = null;
+        
+        function getUnreadCount(tarefa) {
+            const msgs = tarefa.mensagens || [];
+            const ultima = tarefa.ultimaVisualizacaoCliente;
+            if (!ultima) return msgs.filter(m => m.senderId !== appState.usuario.uid).length;
+            const limiar = new Date(ultima.seconds * 1000);
+            return msgs.filter(m => m.senderId !== appState.usuario.uid && new Date(m.timestamp) > limiar).length;
+        }
+        
+        function tocarSom() {
+            try {
+                const ctx = new (window.AudioContext || window.webkitAudioContext)();
+                const osc = ctx.createOscillator();
+                const gain = ctx.createGain();
+                osc.connect(gain);
+                gain.connect(ctx.destination);
+                osc.frequency.value = 800;
+                gain.gain.value = 0.3;
+                osc.start();
+                setTimeout(() => { osc.stop(); ctx.close(); }, 200);
+            } catch(e) {}
+        }
+        
+        function mostrarToast(msg) {
+            let toast = document.getElementById('toast-notificacao');
+            if (!toast) {
+                toast = document.createElement('div');
+                toast.id = 'toast-notificacao';
+                toast.className = 'toast-notificacao';
+                document.body.appendChild(toast);
+            }
+            toast.textContent = msg;
+            toast.classList.add('ativo');
+            clearTimeout(toastTimeout);
+            toastTimeout = setTimeout(() => toast.classList.remove('ativo'), 3000);
+        }
+        
+        function atualizarBadgeTitle() {
+            const total = Object.values(appState.unreadMap).reduce((a, b) => a + b, 0);
+            document.title = total > 0 ? `(${total}) Minhas Demandas | Área do Cliente` : 'Área do Cliente';
+        }
+        
+        function atualizarUnreadMap() {
+            appState.tarefas.forEach(t => {
+                appState.unreadMap[t.id] = getUnreadCount(t);
+            });
+            atualizarBadgeTitle();
+        }
+        
+        function marcarComoLido(id) {
+            updateDoc(doc(db, "tarefas", id), { ultimaVisualizacaoCliente: serverTimestamp() });
+            delete appState.unreadMap[id];
+            atualizarBadgeTitle();
+        }
+
+        onAuthStateChanged(auth, user => {
+            if (!user) { window.location.href = 'index.html'; return; }
+            appState.usuario = { uid: user.uid, email: user.email, nome: user.email.split('@')[0], avatar: (user.email.split('@')[0]).slice(0,2).toUpperCase() };
+            document.getElementById('user-nome').textContent = appState.usuario.nome;
+            document.getElementById('user-email').textContent = appState.usuario.email;
+            document.getElementById('user-avatar').textContent = appState.usuario.avatar;
+            carregarDadosCliente();
+            carregarTarefas();
+            
+            document.getElementById('mensagem-input')?.addEventListener('keydown', e => {
+                if (e.key === 'Enter') enviarMensagem();
+            });
+        });
+        
+        async function carregarDadosCliente() {
+            const userDoc = await getDoc(doc(db, "users", appState.usuario.uid));
+            if (userDoc.exists()) {
+                const dados = userDoc.data();
+                const container = document.getElementById('cliente-dados');
+                const phone = dados.telefone ? `<a href="https://wa.me/${dados.telefone.replace(/\D/g,'')}" target="_blank" class="cliente-link">📱 WhatsApp</a>` : '';
+                const site = dados.site ? `<a href="${dados.site}" target="_blank" class="cliente-link">🌐 Acessar Site</a>` : '';
+                container.innerHTML = phone + site;
+            }
+        }
+
+        window.logout = () => { signOut(auth).then(() => { sessionStorage.clear(); window.location.href = 'index.html'; }); };
+        window.toggleMenu = () => {
+            document.querySelector('.sidebar').classList.toggle('ativo');
+            document.getElementById('overlay-menu')?.classList.toggle('ativo');
+            document.getElementById('menu-toggle')?.classList.toggle('aberto');
+        };
+        window.mostrarSecao = function(sec) { renderizarTarefas(); };
+
+        function carregarTarefas() {
+            if (!appState.usuario) return;
+            onSnapshot(query(collection(db, "tarefas"), where("clienteId", "==", appState.usuario.uid)), (snap) => {
+                appState.tarefas = [];
+                snap.forEach(d => {
+                    const data = d.data();
+                    appState.tarefas.push({ id: d.id, ...data });
+                });
+                appState.tarefas.sort((a, b) => (b.updatedAt?.seconds || 0) - (a.updatedAt?.seconds || 0));
+                renderizarTarefas();
+            });
+        }
+
+        function renderizarTarefas() {
+            atualizarUnreadMap();
+            const lista = appState.tarefas;
+            const html = ['pendente', 'fazendo', 'revisao', 'concluido'].map(st => {
+                const ts = lista.filter(t => t.status === st);
+                if (!ts.length) return '';
+                return `<div class="grupo-status"><div class="grupo-header ${st}"><span class="grupo-titulo">${st.toUpperCase()}</span><span class="grupo-count">${ts.length}</span></div><div class="grupo-cards">${ts.map(t => {
+                    const unread = appState.unreadMap[t.id] || 0;
+                    const badge = unread > 0 ? `<span class="unread-badge">${unread}</span>` : '';
+                    
+                    const msgs = t.mensagens || [];
+                    let ultimaMsg = '';
+                    if (msgs.length > 0) {
+                        const ultima = msgs[msgs.length - 1];
+                        const texto = ultima.text.length > 50 ? ultima.text.substring(0, 50) + '...' : ultima.text;
+                        const quem = ultima.senderId === appState.usuario.uid ? '👤 Você' : '📝 Admin';
+                        const hora = new Date(ultima.timestamp).toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
+                        const classe = ultima.senderId === appState.usuario.uid ? 'ultima-msg-cliente' : 'ultima-msg-admin';
+                        ultimaMsg = `<div class="ultima-msg ${classe}"><span class="ultima-msg-texto">"${texto}"</span><span class="ultima-msg-info">${quem} • ${hora}</span></div>`;
+                    }
+                    
+                    return `<article class="card-tarefa ${t.status}" onclick="abrirTarefa('${t.id}')"><div class="card-header"><span class="badge-status">${t.status}</span>${badge}<span class="card-id">${t.id.slice(0,8)}</span></div><h3 class="card-titulo">${t.titulo}</h3><p class="card-desc">${t.descricao}</p>${ultimaMsg}</article>`;
+                }).join('')}</div></div>`;
+            }).join('');
+            document.getElementById('tarefas-container').innerHTML = html || '<div class="empty-state"><div class="icon">📋</div><h3>Nenhuma demanda</h3></div>';
+        }
+
+        window.abrirTarefa = function(id) {
+            tarefaAtual = appState.tarefas.find(t => t.id === id);
+            if (!tarefaAtual) return;
+            document.getElementById('modal-titulo').textContent = tarefaAtual.titulo;
+            document.getElementById('modal-id').textContent = tarefaAtual.id.slice(0,8);
+            document.getElementById('modal-descricao').textContent = tarefaAtual.descricao;
+            
+            if (tarefaAtual.status === 'revisao') {
+                document.getElementById('acao-cliente').style.display = 'block';
+            } else {
+                document.getElementById('acao-cliente').style.display = 'none';
+            }
+            
+            const oldMsgsCount = tarefaAtual.mensagens?.length || 0;
+            
+            tarefaUnsubscribe = onSnapshot(doc(db, "tarefas", id), doc => {
+                const data = doc.data();
+                const newMsgsCount = data.mensagens?.length || 0;
+                tarefaAtual = { id: doc.id, ...data };
+                renderizarMensagens();
+                
+                if (newMsgsCount > oldMsgsCount) {
+                    const novasMsgs = data.mensagens.slice(oldMsgsCount);
+                    const temMsgAdmin = novasMsgs.some(m => m.senderId === 'admin');
+                    if (temMsgAdmin) {
+                        tocarSom();
+                        mostrarToast('📩 Nova mensagem do Admin!');
+                    }
+                }
+                
+                if (tarefaAtual.status === 'revisao') {
+                    document.getElementById('acao-cliente').style.display = 'block';
+                } else {
+                    document.getElementById('acao-cliente').style.display = 'none';
+                }
+            });
+            
+            marcarComoLido(id);
+            renderizarMensagens();
+            document.getElementById('modal-tarefa').classList.add('ativo');
+        };
+        
+        window.fecharModal = function() {
+            if (tarefaUnsubscribe) {
+                tarefaUnsubscribe();
+                tarefaUnsubscribe = null;
+            }
+            document.getElementById('modal-tarefa').classList.remove('ativo');
+            tarefaAtual = null;
+        };
+        
+        function renderizarMensagens() {
+            const container = document.getElementById('chat-mensagens');
+            const msgs = tarefaAtual?.mensagens || [];
+            container.innerHTML = msgs.map(m => {
+                const isCliente = m.senderId === appState.usuario.uid;
+                const hora = m.timestamp ? new Date(m.timestamp).toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' }) : '';
+                return `<div class="msg ${isCliente ? 'msg-cliente' : 'msg-admin'}"><div class="msg-texto">${m.text}</div><div class="msg-info">${isCliente ? 'Você' : 'Admin'} ${hora}</div></div>`;
+            }).join('');
+            container.scrollTop = container.scrollHeight;
+        };
+        
+        window.aprovarDemanda = async function() {
+            if (!tarefaAtual) return;
+            await updateDoc(doc(db, "tarefas", tarefaAtual.id), { status: 'concluido', updatedAt: serverTimestamp() });
+            fecharModal();
+        };
+        
+        window.pedirRevisao = async function() {
+            if (!tarefaAtual) return;
+            await updateDoc(doc(db, "tarefas", tarefaAtual.id), { status: 'pendente', updatedAt: serverTimestamp() });
+            fecharModal();
+        };
+
+        window.enviarMensagem = async function() {
+            const txt = document.getElementById('mensagem-input').value.trim();
+            if (!txt || !tarefaAtual) return;
+            const msgs = tarefaAtual.mensagens || [];
+            msgs.push({ senderId: appState.usuario.uid, text: txt, timestamp: new Date() });
+            await updateDoc(doc(db, "tarefas", tarefaAtual.id), { mensagens: msgs, updatedAt: serverTimestamp() });
+            document.getElementById('mensagem-input').value = '';
+        };
+
+        window.abrirModalNovaDemanda = function() {
+            document.getElementById('modal-nova-demanda').classList.add('ativo');
+        };
+
+        window.fecharModalNovaDemanda = function() {
+            document.getElementById('modal-nova-demanda').classList.remove('ativo');
+            document.getElementById('form-nova-demanda').reset();
+        };
+
+        document.getElementById('form-nova-demanda')?.addEventListener('submit', async function(e) {
+            e.preventDefault();
+            const titulo = document.getElementById('nova-titulo').value;
+            const desc = document.getElementById('nova-descricao').value;
+            if (!titulo || !desc) return;
+            
+            await addDoc(collection(db, "tarefas"), {
+                clienteId: appState.usuario.uid,
+                clienteNome: appState.usuario.nome,
+                titulo, descricao: desc,
+                status: 'pendente',
+                mensagens: [{ senderId: appState.usuario.uid, text: desc, timestamp: new Date() }],
+                createdAt: serverTimestamp(),
+                updatedAt: serverTimestamp()
+            });
+            fecharModalNovaDemanda();
+        });
+    </script>
+    <div id="toast-notificacao" class="toast-notificacao"></div>
 </body>
 </html>
