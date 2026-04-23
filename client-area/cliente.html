@@ -87,6 +87,9 @@
                         <button class="btn btn-primary" onclick="enviarMensagem()">ENVIAR</button>
                     </div>
                 </div>
+                <div class="modal-footer">
+                    <button class="btn btn-danger" onclick="excluirTarefa()">🗑️ Excluir Demanda</button>
+                </div>
                 <div class="acao-cliente" id="acao-cliente" style="display: none;">
                     <p class="acao-texto">O serviço está em revisão. O que deseja fazer?</p>
                     <div class="acao-botoes">
@@ -123,7 +126,7 @@
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.0/firebase-app.js";
         import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/11.0.0/firebase-auth.js";
-        import { getFirestore, collection, onSnapshot, addDoc, updateDoc, doc, getDoc, query, where, serverTimestamp } from "https://www.gstatic.com/firebasejs/11.0.0/firebase-firestore.js";
+        import { getFirestore, collection, onSnapshot, addDoc, updateDoc, doc, getDoc, query, where, deleteDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/11.0.0/firebase-firestore.js";
 
         const firebaseConfig = {
             apiKey: "AIzaSyDYvLbBw02MbTcCL-CZekBmb5Nv0Cyk5ic",
@@ -353,6 +356,18 @@
             if (!tarefaAtual) return;
             await updateDoc(doc(db, "tarefas", tarefaAtual.id), { status: 'concluido', updatedAt: serverTimestamp() });
             fecharModal();
+        };
+
+        window.excluirTarefa = async function() {
+            if (!tarefaAtual) return;
+            if (!confirm('⚠️ Tem certeza que deseja excluir esta demanda?\n\nEsta ação não pode ser desfeita.')) return;
+            try {
+                await deleteDoc(doc(db, "tarefas", tarefaAtual.id));
+                mostrarToast('🗑️ Demanda excluída!');
+                fecharModal();
+            } catch(err) {
+                alert('Erro ao excluir: ' + err.message);
+            }
         };
         
         window.pedirRevisao = async function() {
