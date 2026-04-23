@@ -259,7 +259,11 @@
                         const ultima = msgs[msgs.length - 1];
                         const texto = ultima.text.length > 50 ? ultima.text.substring(0, 50) + '...' : ultima.text;
                         const quem = ultima.senderId === appState.usuario.uid ? '👤 Você' : '📝 Admin';
-                        const hora = new Date(ultima.timestamp).toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
+                        let hora = '';
+                        try {
+                            const dateObj = ultima.timestamp?.seconds ? new Date(ultima.timestamp.seconds * 1000) : new Date(ultima.timestamp);
+                            hora = dateObj.toLocaleString('pt-BR', { day: '2-digit', month: '2-digit', hour: '2-digit', minute: '2-digit' });
+                        } catch(e) {}
                         const classe = ultima.senderId === appState.usuario.uid ? 'ultima-msg-cliente' : 'ultima-msg-admin';
                         ultimaMsg = `<div class="ultima-msg ${classe}"><span class="ultima-msg-texto">"${texto}"</span><span class="ultima-msg-info">${quem} • ${hora}</span></div>`;
                     }
@@ -328,10 +332,9 @@
                 const isCliente = m.senderId === appState.usuario.uid;
                 let hora = '';
                 try {
-                    hora = new Date(m.timestamp).toLocaleString('pt-BR', { day: '2-digit', month: '2-digit', hour: '2-digit', minute: '2-digit' });
-                } catch(e) {
-                    hora = m.timestamp?.toString() || '';
-                }
+                    const dateObj = m.timestamp?.seconds ? new Date(m.timestamp.seconds * 1000) : new Date(m.timestamp);
+                    hora = dateObj.toLocaleString('pt-BR', { day: '2-digit', month: '2-digit', hour: '2-digit', minute: '2-digit' });
+                } catch(e) {}
                 return `<div class="msg ${isCliente ? 'msg-cliente' : 'msg-admin'}"><div class="msg-texto">${m.text}</div><div class="msg-info">${isCliente ? 'Você' : 'Admin'} • ${hora}</div></div>`;
             }).join('');
             container.scrollTop = container.scrollHeight;

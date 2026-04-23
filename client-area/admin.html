@@ -344,7 +344,11 @@ function carregarTarefas() {
                         const ultima = msgs[msgs.length - 1];
                         const texto = ultima.text.length > 50 ? ultima.text.substring(0, 50) + '...' : ultima.text;
                         const quem = ultima.senderId === 'admin' ? '📝 Admin' : '👤 Cliente';
-                        const hora = new Date(ultima.timestamp).toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
+                        let hora = '';
+                        try {
+                            const dateObj = ultima.timestamp?.seconds ? new Date(ultima.timestamp.seconds * 1000) : new Date(ultima.timestamp);
+                            hora = dateObj.toLocaleString('pt-BR', { day: '2-digit', month: '2-digit', hour: '2-digit', minute: '2-digit' });
+                        } catch(e) {}
                         const classe = ultima.senderId === 'admin' ? 'ultima-msg-admin' : 'ultima-msg-cliente';
                         ultimaMsg = `<div class="ultima-msg ${classe}"><span class="ultima-msg-texto">"${texto}"</span><span class="ultima-msg-info">${quem} • ${hora}</span></div>`;
                     }
@@ -418,10 +422,9 @@ function carregarTarefas() {
                 const isAdmin = m.senderId === 'admin' || m.senderId === appState.usuario?.uid;
                 let hora = '';
                 try {
-                    hora = new Date(m.timestamp).toLocaleString('pt-BR', { day: '2-digit', month: '2-digit', hour: '2-digit', minute: '2-digit' });
-                } catch(e) {
-                    hora = m.timestamp?.toString() || '';
-                }
+                    const dateObj = m.timestamp?.seconds ? new Date(m.timestamp.seconds * 1000) : new Date(m.timestamp);
+                    hora = dateObj.toLocaleString('pt-BR', { day: '2-digit', month: '2-digit', hour: '2-digit', minute: '2-digit' });
+                } catch(e) {}
                 return `<div class="msg ${isAdmin ? 'msg-admin' : 'msg-cliente'}"><div class="msg-texto">${m.text}</div><div class="msg-info">${isAdmin ? 'Admin' : 'Cliente'} • ${hora}</div></div>`;
             }).join('');
             container.scrollTop = container.scrollHeight;
