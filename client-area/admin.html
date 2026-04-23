@@ -418,16 +418,25 @@ function carregarTarefas() {
         function renderizarMensagens() {
             const container = document.getElementById('chat-mensagens');
             const msgs = tarefaAtual?.mensagens || [];
-            container.innerHTML = msgs.map(m => {
+            container.innerHTML = msgs.map((m, idx) => {
                 const isAdmin = m.senderId === 'admin' || m.senderId === appState.usuario?.uid;
                 let hora = '';
                 try {
                     const dateObj = m.timestamp?.seconds ? new Date(m.timestamp.seconds * 1000) : new Date(m.timestamp);
                     hora = dateObj.toLocaleString('pt-BR', { day: '2-digit', month: '2-digit', hour: '2-digit', minute: '2-digit' });
                 } catch(e) {}
-                return `<div class="msg ${isAdmin ? 'msg-admin' : 'msg-cliente'}"><div class="msg-texto">${m.text}</div><div class="msg-info">${isAdmin ? 'Admin' : 'Cliente'} • ${hora}</div></div>`;
+                const podeApagar = m.senderId === 'admin' || m.senderId === appState.usuario?.uid;
+                const btnApagar = podeApagar ? `<button class="btn-apagar-msg" onclick="apagarMensagem(${idx})" title="Apagar mensagem">×</button>` : '';
+                return `<div class="msg ${isAdmin ? 'msg-admin' : 'msg-cliente'}"><div class="msg-content">${btnApagar}<div class="msg-texto">${m.text}</div><div class="msg-info">${isAdmin ? 'Admin' : 'Cliente'} • ${hora}</div></div></div>`;
             }).join('');
             container.scrollTop = container.scrollHeight;
+        };
+        
+        window.apagarMensagem = async function(idx) {
+            if (!tarefaAtual || !confirm('Apagar esta mensagem?')) return;
+            const msgs = [...(tarefaAtual.mensagens || [])];
+            msgs.splice(idx, 1);
+            await updateDoc(doc(db, "tarefas", tarefaAtual.id), { mensagens: msgs, updatedAt: serverTimestamp() });
         };
 
         window.alterarStatus = async function(s) {
