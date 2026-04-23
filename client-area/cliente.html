@@ -83,6 +83,8 @@
                     <label>Mensagens</label>
                     <div class="chat-mensagens" id="chat-mensagens"></div>
                     <div class="chat-input">
+                        <input type="file" id="input-anexo" style="display:none" accept="image/*,.pdf,.doc,.docx,.xls,.xlsx" onchange="anexarArquivo(this)">
+                        <button type="button" id="btn-anexar" class="btn-anexo" onclick="document.getElementById('input-anexo').click()">📎 Anexar</button>
                         <input type="text" id="mensagem-input" placeholder="Mensagem...">
                         <button class="btn btn-primary" onclick="enviarMensagem()">ENVIAR</button>
                     </div>

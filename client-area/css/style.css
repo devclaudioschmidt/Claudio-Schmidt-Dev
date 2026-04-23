@@ -469,6 +469,67 @@ a:hover { text-shadow: 0 0 10px var(--neon); }
 
 .chat-input input:focus { border-color: var(--neon); }
 
+.btn-anexo {
+  padding: 12px 16px;
+  border-radius: 8px;
+  border: 1px solid var(--borda);
+  background: var(--fundo-card);
+  color: var(--texto);
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: var(--transicao);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.btn-anexo:hover { border-color: var(--neon); color: var(--neon); }
+.btn-anexo:disabled { opacity: 0.5; cursor: not-allowed; }
+
+.balao-anexo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 16px;
+  border-radius: 12px;
+  background: var(--fundo-card);
+  border: 1px solid var(--borda);
+  color: var(--texto);
+  text-decoration: none;
+  transition: var(--transicao);
+  max-width: 80%;
+}
+
+.balao-anexo:hover {
+  border-color: var(--neon);
+  background: var(--fundo-hover);
+}
+
+.icone-arquivo { font-size: 1.5rem; }
+
+.info-anexo {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  flex: 1;
+  min-width: 0;
+}
+
+.nome-arquivo {
+  font-weight: 600;
+  font-size: 0.9rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.tamanho-arquivo {
+  font-size: 0.75rem;
+  color: var(--texto-fraco);
+}
+
+.download-icon { font-size: 1.2rem; opacity: 0.6; }
+
 /* ====== FORM ====== */
 .form-group { margin-bottom: 20px; }
 .form-group label { display: block; font-size: 0.8rem; font-weight: 700; margin-bottom: 8px; color: var(--texto-fraco); text-transform: uppercase; letter-spacing: 1px; }

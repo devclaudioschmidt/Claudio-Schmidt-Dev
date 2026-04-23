@@ -6,6 +6,7 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.0/firebase-app.js";
 import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/11.0.0/firebase-auth.js";
 import { getFirestore, collection, addDoc, onSnapshot, updateDoc, doc, query, where, orderBy, serverTimestamp, Timestamp } from "https://www.gstatic.com/firebasejs/11.0.0/firebase-firestore.js";
+import { getStorage, ref, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/11.0.0/firebase-storage.js";
 
 const firebaseConfig = {
   apiKey: "AIzaSyDYvLbBw02MbTcCL-CZekBmb5Nv0Cyk5ic",
@@ -19,6 +20,7 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getFirestore(app);
+const storage = getStorage(app);
 
 // Estado global
 let appState = {
@@ -182,6 +184,54 @@ window.abrirModalTarefa = function(tarefaId) {
   document.getElementById('modal-tarefa').classList.add('ativo');
 };
 
+// ========== ANEXOS ==========
+window.anexarArquivo = function(input) {
+  const file = input.files[0];
+  if (!file || !tarefaAtual) return;
+  
+  if (file.size > 10 * 1024 * 1024) {
+    alert('Arquivo muito grande! Máximo 10MB.');
+    return;
+  }
+  
+  const btn = document.getElementById('btn-anexar');
+  btn.disabled = true;
+  btn.textContent = '📤 Enviando...';
+  
+  uploadArquivo(file, tarefaAtual.id).then(() => {
+    input.value = '';
+    btn.disabled = false;
+    btn.textContent = '📎 Anexar';
+  }).catch(err => {
+    console.error('Erro ao enviar arquivo:', err);
+    alert('Erro ao enviar arquivo');
+    btn.disabled = false;
+    btn.textContent = '📎 Anexar';
+  });
+};
+
+async function uploadArquivo(file, tarefaId) {
+  const storageRef = ref(storage, `anexos/${tarefaId}/${Date.now()}_${file.name}`);
+  const snapshot = await uploadBytes(storageRef, file);
+  const url = await getDownloadURL(snapshot.ref);
+  
+  const mensagens = tarefaAtual.mensagens || [];
+  mensagens.push({
+    senderId: appState.usuario.uid,
+    tipo: 'anexo',
+    nomeArquivo: file.name,
+    url: url,
+    tamanho: file.size,
+    tipoMime: file.type,
+    timestamp: new Date()
+  });
+  
+  await updateDoc(doc(db, "tarefas", tarefaId), {
+    mensagens: mensagens,
+    updatedAt: serverTimestamp()
+  });
+}
+
 function renderizarMensagens() {
   const container = document.getElementById('chat-mensagens');
   if (!container || !tarefaAtual) return;
@@ -192,6 +242,25 @@ function renderizarMensagens() {
       ? msg.timestamp.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' })
       : '';
     const isAdmin = msg.senderId === 'admin';
+    
+    if (msg.tipo === 'anexo') {
+      const icone = getIconeArquivo(msg.tipoMime);
+      const tamanho = formatarTamanho(msg.tamanho);
+      return `
+        <div class="mensagem ${isAdmin ? 'sistema' : 'usuario'}">
+          <a href="${msg.url}" target="_blank" class="balao-anexo">
+            <span class="icone-arquivo">${icone}</span>
+            <div class="info-anexo">
+              <span class="nome-arquivo">${msg.nomeArquivo}</span>
+              <span class="tamanho-arquivo">${tamanho}</span>
+            </div>
+            <span class="download-icon">⬇️</span>
+          </a>
+          <span class="hora">${hora}</span>
+        </div>
+      `;
+    }
+    
     return `
       <div class="mensagem ${isAdmin ? 'sistema' : 'usuario'}">
         <div class="balao">${msg.text}</div>
@@ -201,6 +270,22 @@ function renderizarMensagens() {
   }).join('');
   
   container.scrollTop = container.scrollHeight;
+}
+
+function getIconeArquivo(tipoMime) {
+  if (!tipoMime) return '📄';
+  if (tipoMime.startsWith('image/')) return '🖼️';
+  if (tipoMime === 'application/pdf') return '📕';
+  if (tipoMime.includes('word') || tipoMime.includes('document')) return '📝';
+  if (tipoMime.includes('sheet') || tipoMime.includes('excel')) return '📊';
+  return '📄';
+}
+
+function formatarTamanho(bytes) {
+  if (!bytes) return '';
+  if (bytes < 1024) return bytes + ' B';
+  if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
+  return (bytes / (1024 * 1024)).toFixed(1) + ' MB';
 }
 
 window.enviarMensagem = async function() {
